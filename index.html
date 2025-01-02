@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 
     <!--Page Title-->
-    <title>Namari - Free Landing Page Template</title>
+    <title>AionIA - A Quantum Company</title>
 
     <!--Meta Keywords and Description-->
     <meta name="keywords" content="">
@@ -26,11 +26,142 @@
     <!-- Animate CSS-->
     <link href="css/animate.css" rel="stylesheet" type="text/css">
 
+    <style>
+/* Basic Quantum Bit (Qubit) Cursor */
+body {
+    cursor: none; /* Hide default cursor */
+}
+
+/* Ensure the custom cursor stays above all elements */
+.custom-cursor {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.7)); /* Black and White gradient */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 255, 255, 0.7); /* Glowing effect with black and white */
+    animation: spin 2s infinite linear; /* Spin animation */
+    pointer-events: none; /* Prevent interaction */
+    transform: translate(-50%, -50%); /* Center the cursor */
+    z-index: 99999; /* Make sure the cursor is above all other elements */
+}
+
+/* Prevent the default hand cursor (for buttons, links, etc.) */
+button, a {
+    cursor: none !important; /* Remove hand cursor */
+}
+
+/* Electron-like Particles around the cursor (four electrons in each orbit) */
+.electron {
+    position: absolute;
+    width: 4px; /* Smaller size for all electrons */
+    height: 4px; /* Smaller size for all electrons */
+    background: linear-gradient(45deg, rgba(150, 150, 150, 0.8), rgba(50, 50, 50, 0.8)); /* Grey gradient */
+    border-radius: 50%;
+    pointer-events: none; /* Make sure electrons don't interfere with user interactions */
+    z-index: 1; /* Ensure all electrons appear below cursor */
+}
+
+/* Inner Electron Spin (clockwise) */
+.inner-electron {
+    animation: electron-spin-inner 2s infinite linear;
+}
+
+/* Outer Electron Spin (counterclockwise) */
+.outer-electron {
+    animation: electron-spin-outer 3s infinite linear reverse;
+}
+
+/* Prevent the default hand cursor (for buttons, links, etc.) */
+button, a, .custom-cursor {
+    cursor: none !important; /* Remove hand cursor */
+}
+
+/* Electron Spin for Inner Orbit (clockwise direction) */
+@keyframes electron-spin-inner {
+    0% {
+        transform: rotate(0deg) translateX(16px) rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg) translateX(16px) rotate(-360deg);
+    }
+}
+
+/* Electron Spin for Outer Orbit (counterclockwise direction) */
+@keyframes electron-spin-outer {
+    0% {
+        transform: rotate(0deg) translateX(24px) rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg) translateX(24px) rotate(360deg);
+    }
+}
+
+/* Animations for the quantum bit's behavior */
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+</style>
+</head>
+
     <!--Google Webfonts-->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
+    <div class="custom-cursor">
+        <!-- Electrons (smaller size, 2 different orbits with 4 electrons per orbit) -->
+        <div class="electron inner-electron" style="animation-delay: 0s;"></div>
+        <div class="electron inner-electron" style="animation-delay: 0.5s;"></div>
+        <div class="electron inner-electron" style="animation-delay: 1s;"></div>
+        <div class="electron inner-electron" style="animation-delay: 1.5s;"></div>
+        
+        <div class="electron outer-electron" style="animation-delay: 0.5s;"></div>
+        <div class="electron outer-electron" style="animation-delay: 1s;"></div>
+        <div class="electron outer-electron" style="animation-delay: 1.5s;"></div>
+        <div class="electron outer-electron" style="animation-delay: 2s;"></div>
+    </div>
+    
+    <script>
+        const cursor = document.querySelector('.custom-cursor');
+        const electrons = document.querySelectorAll('.electron');
+        
+        // Position the custom cursor
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.pageX + 'px';
+            cursor.style.top = e.pageY + 'px';
+    
+            // Track the visibility of the electrons based on their position
+            electrons.forEach(electron => {
+                const electronRect = electron.getBoundingClientRect();
+                const cursorRect = cursor.getBoundingClientRect();
+    
+                // Check if the electron is behind the cursor
+                if (electronRect.left < cursorRect.left && electronRect.right > cursorRect.right) {
+                    electron.style.visibility = 'hidden'; // Hide the electron when behind the cursor
+                } else {
+                    electron.style.visibility = 'visible'; // Show the electron when it's in front of the cursor
+                }
+            });
+        });
+    
+        // Prevent cursor from getting stuck while scrolling on a touch device
+        document.addEventListener('wheel', (e) => {
+            cursor.style.left = `${e.pageX || e.clientX}px`;
+            cursor.style.top = `${e.pageY || e.clientY}px`;
+        });
+    
+        document.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0]; // Get the first touch
+            cursor.style.left = `${touch.pageX}px`;
+            cursor.style.top = `${touch.pageY}px`;
+        });
+    </script>
 <!-- Preloader -->
 <div id="preloader">
     <div id="status" class="la-ball-triangle-path">
@@ -59,11 +190,11 @@
                     <div id="logo">
 
                         <!--Logo that is shown on the banner-->
-                        <img src="images/logo.png" id="banner-logo" alt="Landing Page"/>
+                        <img src="images/l2.PNG" id="banner-logo" alt="Landing Page"/>
                         <!--End of Banner Logo-->
 
                         <!--The Logo that is shown on the sticky Navigation Bar-->
-                        <img src="images/logo-2.png" id="navigation-logo" alt="Landing Page"/>
+                        <img src="images/l2.PNG" id="navigation-logo" alt="Landing Page"/>
                         <!--End of Navigation Logo-->
 
                     </div>
@@ -74,28 +205,18 @@
                         <!--Social Icons in Header-->
                         <ul class="social-icons">
                             <li>
-                                <a target="_blank" title="Facebook" href="https://www.facebook.com/username">
-                                    <i class="fa fa-facebook fa-1x"></i><span>Facebook</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a target="_blank" title="Google+" href="http://google.com/+username">
+                                <a target="_blank" title="Google+" href="https://www.google.com/search?q=Aion-IA">
                                     <i class="fa fa-google-plus fa-1x"></i><span>Google+</span>
                                 </a>
                             </li>
                             <li>
-                                <a target="_blank" title="Twitter" href="http://www.twitter.com/username">
-                                    <i class="fa fa-twitter fa-1x"></i><span>Twitter</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a target="_blank" title="Instagram" href="http://www.instagram.com/username">
+                                <a target="_blank" title="Instagram" href="https://www.instagram.com/aion.ia/">
                                     <i class="fa fa-instagram fa-1x"></i><span>Instagram</span>
                                 </a>
                             </li>
                             <li>
-                                <a target="_blank" title="behance" href="http://www.behance.net">
-                                    <i class="fa fa-behance fa-1x"></i><span>Behance</span>
+                                <a target="_blank" title="behance" href="https://www.linkedin.com/company/101884329/admin/dashboard/">
+                                    <i class="fa fa-linkedin fa-1x"></i><span>LinkedIn</span>
                                 </a>
                             </li>
                         </ul>
@@ -110,19 +231,13 @@
                                 <a href="#banner">Home</a>
                             </li>
                             <li>
-                                <a href="#about">About</a>
-                            </li>
-                            <li>
-                                <a href="#gallery">Gallery</a>
-                            </li>
-                            <li>
                                 <a href="#services">Services</a>
                             </li>
                             <li>
                                 <a href="#testimonials">Testimonials</a>
                             </li>
                             <li>
-                                <a href="#clients">Clients</a>
+                                <a href="#partners">Partners</a>
                             </li>
                             <li>
                                 <a href="#pricing">Pricing</a>
@@ -144,13 +259,12 @@
             <div class="col-38">
 
                 <div class="section-heading">
-                    <h1>A FREE AND SIMPLE LANDING PAGE</h1>
-                    <h2>Namari is a free landing page template you can use for your projects. It is free to use for your
-                        personal and commercial projects, enjoy!</h2>
+                    <h1>A QUANTUM COMPUTING COMPANY</h1>
+                    <h2>Aion-IA is a cutting-edge Quantum Computing research company dedicated to exploring real-world applications of quantum technology. Our focus spans developing quantum algorithms, advancing post-quantum cryptography, and addressing complex computational problems across industries.</h2>
                 </div>
 
                 <!--Call to Action-->
-                <a href="#" class="button">START CREATING TODAY</a>
+                <a href="#" class="button">GET IN THE Q</a>
                 <!--End Call to Action-->
 
             </div>
@@ -162,16 +276,15 @@
     <main id="content">
 
         <!--Introduction-->
-        <section id="about" class="introduction scrollto">
+        <section id="services" class="introduction scrollto">
 
             <div class="row clearfix">
 
                 <div class="col-3">
                     <div class="section-heading">
-                        <h3>SUCCESS</h3>
-                        <h2 class="section-title">How We Help You To Sell Your Product</h2>
-                        <p class="section-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam!</p>
+                        <h3>SERVICES</h3>
+                        <h2 class="section-title">Quantum Computing: The Future of Computing</h2>
+                        <p class="section-subtitle">Quantum computing harnesses the power of quantum mechanics to solve problems beyond the reach of classical computers. By using qubits that can represent multiple states at once, quantum computers offer exponential speedups for tasks like cryptography, optimization, and simulations, paving the way for breakthroughs in various industries.</p>
                     </div>
 
                 </div>
@@ -186,9 +299,8 @@
                         </div>
                         <!--Icon Block Description-->
                         <div class="icon-block-description">
-                            <h4>HTML5 &amp; CSS3</h4>
-                            <p>Has ne tritani atomorum conclusionemque, in dolorum volumus cotidieque eum. At vis choro
-                                neglegentur iudico</p>
+                            <h4>CRYPTOGRAPHY</h4>
+                            <p>Quantum computing will enable the development of quantum-safe encryption methods, securing data against future quantum threats.</p>
                         </div>
                     </div>
                     <!--End of Icon Block-->
@@ -201,9 +313,8 @@
                         </div>
                         <!--Icon Block Description-->
                         <div class="icon-block-description">
-                            <h4>Easy to Use</h4>
-                            <p>Cu vero ipsum vim, doctus facilisi sea in. Eam ex falli honestatis repudiandae, sit
-                                detracto mediocrem disputationi</p>
+                            <h4>OPTIMIZATION & SIMULATIONS</h4>
+                            <p>Quantum algorithms can solve complex optimization problems and simulate molecular structures, offering solutions faster than classical methods.</p>
                         </div>
                     </div>
                     <!--End of Icon Block-->
@@ -216,9 +327,8 @@
                         </div>
                         <!--Icon Block Description-->
                         <div class="icon-block-description">
-                            <h4>Fully Responsive</h4>
-                            <p>Id porro tritani recusabo usu, eum intellegam consequuntur et. Fugit debet ea sit, an pro
-                                nemore vivendum</p>
+                            <h4>MEDICAL & HEALTHCARE</h4>
+                            <p>Quantum computing will accelerate drug discovery, personalized treatments, and medical research by simulating complex biological systems more efficiently.</p>
                         </div>
                     </div>
                     <!--End of Icon Block-->
@@ -231,9 +341,8 @@
                         </div>
                         <!--Icon Block Description-->
                         <div class="icon-block-description">
-                            <h4>Parallax Effect</h4>
-                            <p>Id porro tritani recusabo usu, eum intellegam consequuntur et. Fugit debet ea sit, an pro
-                                nemore vivendum</p>
+                            <h4>DISCOVERY & SYNTHESIS</h4>
+                            <p>Quantum computing will revolutionize material science and chemistry by enabling the discovery and synthesis of new compounds and materials with precision and speed.</p>
                         </div>
                     </div>
                     <!--End of Icon Block-->
@@ -247,7 +356,7 @@
         <!--End of Introduction-->
 
 
-        <!--Gallery-->
+        <!--Gallery
         <aside id="gallery" class="row text-center scrollto clearfix" data-featherlight-gallery
                  data-featherlight-filter="a">
 
@@ -265,62 +374,8 @@
                    data-wow-delay="0.7s"><img src="images/gallery-images/gallery-image-6.jpg" alt="Landing Page"/></a>
 
         </aside>
-        <!--End of Gallery-->
+        End of Gallery-->
 
-
-        <!--Content Section-->
-        <div id="services" class="scrollto clearfix">
-
-            <div class="row no-padding-bottom clearfix">
-
-
-                <!--Content Left Side-->
-                <div class="col-3">
-                    <!--User Testimonial-->
-                    <blockquote class="testimonial text-right bigtest">
-                        <q>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore
-                            et dolore magna aliqua</q>
-                        <footer>— John Doe, Happy Customer</footer>
-                    </blockquote>
-                    <!-- End of Testimonial-->
-
-                </div>
-                <!--End Content Left Side-->
-
-                <!--Content of the Right Side-->
-                <div class="col-3">
-                    <div class="section-heading">
-                        <h3>BELIEVING</h3>
-                        <h2 class="section-title">Focusing On What Matters Most</h2>
-                        <p class="section-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam!</p>
-                    </div>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                        totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-                        dicta sunt explicabo.
-                    </p>
-                    <p>
-                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
-                        consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet!
-                    </p>
-                    <!-- Just replace the Video ID "UYJ5IjBRlW8" with the ID of your video on YouTube (Found within the URL) -->
-                    <a href="#" data-videoid="UYJ5IjBRlW8" data-videosite="youtube" class="button video link-lightbox">
-                        WATCH VIDEO <i class="fa fa-play" aria-hidden="true"></i>
-                    </a>
-                </div>
-                <!--End Content Right Side-->
-
-                <div class="col-3">
-                    <img src="images/dancer.jpg" alt="Dancer"/>
-                </div>
-
-            </div>
-
-
-        </div>
-        <!--End of Content Section-->
 
         <!--Testimonials-->
         <aside id="testimonials" class="scrollto text-center" data-enllax-ratio=".2">
@@ -329,36 +384,30 @@
 
                 <div class="section-heading">
                     <h3>FEEDBACK</h3>
-                    <h2 class="section-title">What our customers are saying</h2>
+                    <h2 class="section-title">A word from our collaborators</h2>
                 </div>
 
                 <!--User Testimonial-->
                 <blockquote class="col-3 testimonial classic">
-                    <img src="images/user-images/user-1.jpg" alt="User"/>
-                    <q>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore
-                        et dolore magna aliqua</q>
-                    <footer>John Doe - Happy Customer</footer>
+                    <!--<img src="images/user-images/user-1.jpg" alt="User"/>-->
+                    <q>We engaged Aion-IA for a comprehensive Quantum Computing and Post-Quantum Cryptography training program for our team. The trainers provided a clear, hands-on approach, making complex quantum concepts accessible. The practical sessions and real-world applications presented helped us understand how we can apply quantum-safe cryptography in our cybersecurity infrastructure. The training was highly valuable, and we’re confident it will play a pivotal role in future-proofing our data security.</q>
+                    <footer>John Doe - Operational Head Global Inc.</footer>
                 </blockquote>
                 <!-- End of Testimonial-->
 
                 <!--User Testimonial-->
                 <blockquote class="col-3 testimonial classic">
-                    <img src="images/user-images/user-2.jpg" alt="User"/>
-                    <q>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore
-                        et dolore magna aliqua</q>
-                    <footer>Roslyn Doe - Happy Customer</footer>
+                    <!--<img src="images/user-images/user-2.jpg" alt="User"/>-->
+                    <q>As an engineering student, the internship program at Aion-IA was an eye-opening experience. The hands-on training in Quantum Computing, coupled with deep dives into quantum algorithms and cryptography, gave me a solid foundation for future research. The course instructors were incredibly knowledgeable and supportive, and I’m excited about how this knowledge can shape my career in cutting-edge tech fields like AI and cybersecurity.</q>
+                    <footer>Abilash Choudary - Final Year Student at MIT</footer>
                 </blockquote>
                 <!-- End of Testimonial-->
 
                 <!--User Testimonial-->
                 <blockquote class="col-3 testimonial classic">
-                    <img src="images/user-images/user-3.jpg" alt="User"/>
-                    <q>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore
-                        et dolore magna aliqua</q>
-                    <footer>Thomas Doe - Happy Customer</footer>
+                    <!--<img src="images/user-images/user-3.jpg" alt="User"/>-->
+                    <q>Our startup had no prior exposure to Quantum Computing, but after completing Aion-IA’s internship program, we’re now equipped with the knowledge to integrate quantum algorithms into our product development. The training was well-structured, and the real-world case studies showed us the endless possibilities for quantum in industries like data security and optimization. It’s been a game-changer for us!</q>
+                    <footer>Mehul Agarwal - Start Up Founder</footer>
                 </blockquote>
                 <!-- End of Testimonial-->
 
@@ -368,17 +417,15 @@
         <!--End of Testimonials-->
 
         <!--Clients-->
-        <section id="clients" class="scrollto clearfix">
+        <section id="partners" class="scrollto clearfix">
             <div class="row clearfix">
 
                 <div class="col-3">
 
                     <div class="section-heading">
-                        <h3>TRUST</h3>
-                        <h2 class="section-title">Companies who use our services</h2>
-                        <p class="section-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                            eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam!</p>
+                        <h3>PARTNERS</h3>
+                        <h2 class="section-title">Companies who back us</h2>
+                        <p class="section-subtitle">Empowering innovation with our trusted partners, shaping the future of quantum computing.</p>
                     </div>
 
                 </div>
@@ -386,42 +433,34 @@
                 <div class="col-2-3">
 
                     <a href="#" class="col-3">
-                        <img src="images/company-images/company-logo1.png" alt="Company"/>
+                        <img src="images/company-images/awslogo.png" alt="Company"/>
                         <div class="client-overlay"><span>Tree</span></div>
                     </a>
                     <a href="#" class="col-3">
-                        <img src="images/company-images/company-logo2.png" alt="Company"/>
+                        <img src="images/company-images/honeywelllogo.jpg" alt="Company"/>
                         <div class="client-overlay"><span>Fingerprint</span></div>
                     </a>
                     <a href="#" class="col-3">
-                        <img src="images/company-images/company-logo3.png" alt="Company"/>
+                        <img src="images/company-images/rigettilogo.png" alt="Company"/>
                         <div class="client-overlay"><span>The Man</span></div>
                     </a>
                     <a href="#" class="col-3">
-                        <img src="images/company-images/company-logo4.png" alt="Company"/>
+                        <img src="images/company-images/intellogo.png" alt="Company"/>
                         <div class="client-overlay"><span>Mustache</span></div>
                     </a>
                     <a href="#" class="col-3">
-                        <img src="images/company-images/company-logo5.png" alt="Company"/>
+                        <img src="images/company-images/dwavelogo.png" alt="Company"/>
                         <div class="client-overlay"><span>Goat</span></div>
                     </a>
                     <a href="#" class="col-3">
-                        <img src="images/company-images/company-logo6.png" alt="Company"/>
+                        <img src="images/company-images/logo.png" alt="Company"/>
                         <div class="client-overlay"><span>Justice</span></div>
                     </a>
                     <a href="#" class="col-3">
-                        <img src="images/company-images/company-logo7.png" alt="Company"/>
-                        <div class="client-overlay"><span>Ball</span></div>
-                    </a>
-                    <a href="#" class="col-3">
-                        <img src="images/company-images/company-logo8.png" alt="Company"/>
+                        <img src="images/company-images/ibmlogo.png" alt="Company"/>
                         <div class="client-overlay"><span>Cold</span></div>
                     </a>
-
-                    <a href="#" class="col-3">
-                        <img src="images/company-images/company-logo9.png" alt="Company"/>
-                        <div class="client-overlay"><span>Cold</span></div>
-                    </a>
+                    
 
                 </div>
 
@@ -435,24 +474,24 @@
 
                 <div class="section-heading">
                     <h3>YOUR CHOICE</h3>
-                    <h2 class="section-title">We have the right package for you</h2>
+                    <h2 class="section-title">Corporate & Academic Training Programs</h2>
                 </div>
 
                 <!--Pricing Block-->
                 <div class="pricing-block col-3 wow fadeInUp" data-wow-delay="0.4s">
                     <div class="pricing-block-content">
-                        <h3>Personal</h3>
-                        <p class="pricing-sub">The standard version</p>
+                        <h3>BEGINNER</h3>
+                        <p class="pricing-sub">Introduction to Quantum Computing (Beginner Level)</p>
                         <div class="pricing">
-                            <div class="price"><span>$</span>19</div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            <div class="price"><span>$</span>999</div>
+                            <p>A foundational course on quantum mechanics, qubits, and basic quantum algorithms.</p>
                         </div>
                         <ul>
-                            <li>5 Downloads</li>
-                            <li>2 Extensions</li>
-                            <li>Tutorials</li>
-                            <li>Forum Support</li>
-                            <li>1 year free updates</li>
+                            <li>Introduction to Quantum Mechanics and Quantum Computing</li>
+                            <li>Quantum Superposition and Entanglement</li>
+                            <li>Quantum Gates and Simple Quantum Algorithms</li>
+                            <li>Applications of Quantum Computing in the Real World</li>
+                            <li>6 Month Forum Support</li>
                         </ul>
                         <a href="#" class="button">BUY TODAY</a>
                     </div>
@@ -462,18 +501,19 @@
                 <!--Pricing Block-->
                 <div class="pricing-block featured col-3 wow fadeInUp" data-wow-delay="0.6s">
                     <div class="pricing-block-content">
-                        <h3>Student</h3>
-                        <p class="pricing-sub">Most popular choice</p>
+                        <h3>INTERMEDIATE</h3>
+                        <p class="pricing-sub">Quantum Computing & Cryptography (Intermediate Level)</p>
                         <div class="pricing">
-                            <div class="price"><span>$</span>29</div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            <div class="price"><span>$</span>1999</div>
+                            <p>Explore quantum threats to cryptography and learn quantum-safe techniques like PQC.</p>
                         </div>
                         <ul>
-                            <li>15 Downloads</li>
-                            <li>5 Extensions</li>
-                            <li>Tutorials with Files</li>
-                            <li>Forum Support</li>
-                            <li>2 years free updates</li>
+                            <li>Overview of Quantum Computing and its Impact on Cryptography</li>
+                            <li>Cryptographic Algorithms and Quantum Threats</li>
+                            <li>Introduction to Post-Quantum Cryptography (PQC)</li>
+                            <li>Quantum-Resistant Cryptography (QRC) Techniques</li>
+                            <li>Real-World Applications and Case Studies in Quantum Cryptography</li>
+                            <li>1 Year Forum Support</li>
                         </ul>
                         <a href="#" class="button">BUY TODAY</a>
                     </div>
@@ -483,18 +523,20 @@
                 <!--Pricing Block-->
                 <div class="pricing-block col-3 wow fadeInUp" data-wow-delay="0.8s">
                     <div class="pricing-block-content">
-                        <h3>Business</h3>
-                        <p class="pricing-sub">For the whole team</p>
+                        <h3>ADVANCED</h3>
+                        <p class="pricing-sub">Deep Dive into Quantum Computing for Research (Advanced Level)</p>
                         <div class="pricing">
-                            <div class="price"><span>$</span>49</div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            <div class="price"><span>$</span>2599</div>
+                            <p>Comprehensive training for aspiring quantum researchers, covering advanced algorithms and tools.</p>
                         </div>
                         <ul>
-                            <li>Unlimited Downloads</li>
-                            <li>Unlimited Extensions</li>
-                            <li>HD Video Tutorials</li>
-                            <li>Chat Support</li>
-                            <li>Lifetime free updates</li>
+                            <li>Advanced Quantum Algorithms and Their Applications</li>
+                            <li>Quantum Error Correction and Quantum Programming Languages</li>
+                            <li>Hands-on Experience with IBM Quantum and AWS Braket</li>
+                            <li>Exploring Quantum Algorithms in Optimization and Simulations</li>
+                            <li>Introduction to Quantum Research: Tools, Methodologies, and Techniques</li>
+                            <li>Understanding Quantum Machine Learning and AI</li>
+                            <li>Lifetime Forum Support</li>
                         </ul>
                         <a href="#" class="button">BUY TODAY</a>
                     </div>
@@ -513,33 +555,23 @@
     <footer id="landing-footer" class="clearfix">
         <div class="row clearfix">
 
-            <p id="copyright" class="col-2">Made with love by <a href="https://www.shapingrain.com">ShapingRain</a></p>
+            <p id="copyright" class="col-2">© <span id="2025"></span> Aion-IA. All Rights Reserved.</p>
 
             <!--Social Icons in Footer-->
             <ul class="col-2 social-icons">
                 <li>
-                    <a target="_blank" title="Facebook" href="https://www.facebook.com/username">
-                        <i class="fa fa-facebook fa-1x"></i><span>Facebook</span>
-                    </a>
-                </li>
-                <li>
-                    <a target="_blank" title="Google+" href="http://google.com/+username">
+                    <a target="_blank" title="Google+" href="https://www.google.com/search?q=Aion-IA">
                         <i class="fa fa-google-plus fa-1x"></i><span>Google+</span>
                     </a>
                 </li>
                 <li>
-                    <a target="_blank" title="Twitter" href="http://www.twitter.com/username">
-                        <i class="fa fa-twitter fa-1x"></i><span>Twitter</span>
-                    </a>
-                </li>
-                <li>
-                    <a target="_blank" title="Instagram" href="http://www.instagram.com/username">
+                    <a target="_blank" title="Instagram" href="https://www.instagram.com/aion.ia/">
                         <i class="fa fa-instagram fa-1x"></i><span>Instagram</span>
                     </a>
                 </li>
                 <li>
-                    <a target="_blank" title="behance" href="http://www.behance.net">
-                        <i class="fa fa-behance fa-1x"></i><span>Behance</span>
+                    <a target="_blank" title="behance" href="https://www.linkedin.com/company/101884329/admin/dashboard/">
+                        <i class="fa fa-linkedin fa-1x"></i><span>LinkedIn</span>
                     </a>
                 </li>
             </ul>
