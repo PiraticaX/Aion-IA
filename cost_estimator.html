@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Aion-IA Web Design Cost Calculator — Quantum Edition</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+  /* ====== Reset & base ====== */
+  :root{
+    --bg-dark:#05060a;
+    --panel:#ffffff;
+    --muted:#c7d0dc;
+    --text-dark:#061021;
+    --accent-yellow:#FFD95A;
+    --accent-cyan:#00ffff;
+    --card-radius:14px;
+    --glass: rgba(255,255,255,0.04);
+  }
+  *{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+  html,body{height:100%;margin:0;background:var(--bg-dark);color:var(--muted);-webkit-font-smoothing:antialiased;}
+  /* animated particle background */
+  .bg-canvas{
+    position:fixed;inset:0;z-index:0;overflow:hidden;
+    background: radial-gradient(ellipse at center, rgba(10,12,20,0.6) 0%, rgba(2,4,6,0.85) 60%, #000000 100%);
+  }
+  /* very slow moving particles (CSS only) */
+  .particle{
+    position:absolute;border-radius:50%;opacity:0.08;
+    filter:blur(10px);
+    animation: drift 60s linear infinite;
+    mix-blend-mode:screen;
+  }
+  @keyframes drift{
+    from{transform:translateY(-20vh) translateX(0) scale(0.8);}
+    to{transform:translateY(120vh) translateX(40vw) scale(1.2);}
+  }
+  /* layout */
+  .page{position:relative;z-index:2;max-width:1200px;margin:36px auto;padding:28px;}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;}
+  #brand{display:flex;align-items:center;gap:12px;}
+  #brandLogo{width:64px;height:64px;border-radius:12px;object-fit:cover;background:#000;}
+  .brand-title{color:var(--panel);font-weight:700;font-size:20px;margin:0;}
+  .brand-sub{color:var(--muted);font-size:13px;margin:0;}
+  nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:14px;}
+  /* main grid */
+  .grid{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start;}
+  @media(max-width:960px){.grid{grid-template-columns:1fr;padding:0 12px;} .right-panel{order:2}}
+  /* main card */
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,250,0.96));
+    color:var(--text-dark);
+    border-radius:var(--card-radius);
+    padding:20px;border:1px solid rgba(2,6,23,0.08);
+    box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+  }
+  h1,h2,h3{margin:0 0 8px 0;color:var(--text-dark);}
+  p.lead{margin:0 0 16px 0;color:#475569;}
+  label{display:block;font-size:13px;color:#344054;margin-bottom:6px;}
+  .input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid #e6e9ef;background:#fff;font-size:14px;color:var(--text-dark);}
+  select.input{appearance:none;}
+  .row{display:flex;gap:12px;}
+  .col{flex:1;}
+  .small{font-size:13px;color:#6b7280;}
+  .section{margin-bottom:16px;}
+  .btn{
+    background:linear-gradient(90deg,var(--accent-yellow),var(--accent-cyan));
+    border:none;color:#021024;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;
+    box-shadow:0 8px 30px rgba(122,59,255,0.08);
+  }
+  .btn.ghost{background:#fff;border:1px solid rgba(3,7,18,0.06);}
+  .btn:hover{transform:translateY(-3px);transition:transform .12s;}
+  .radio-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  .option{
+    display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:1px solid rgba(2,6,23,0.06);
+    background:#fff;cursor:pointer;
+  }
+  .option input{accent-color:var(--accent-cyan);}
+  .option.selected{box-shadow:0 10px 30px rgba(0,255,255,0.05);border:1px solid rgba(0,255,255,0.12);transform:translateY(-4px);}
+  .accordion{margin-bottom:10px;border-radius:10px;overflow:hidden;border:1px solid rgba(2,6,23,0.04);}
+  .accordion summary{background:#fff;padding:12px 14px;list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(2,6,23,0.03);}
+  .accordion[open] summary{background:#fff;}
+  .accordion .content{padding:12px;background:#fbfbfd;}
+  .actions{display:flex;gap:10px;align-items:center;margin-top:12px;}
+  .muted-note{font-size:13px;color:#6b7280;}
+  .summary-tile{background:#fff;border-radius:10px;padding:12px;border:1px solid rgba(2,6,23,0.04);margin-bottom:12px;}
+  .fixed-cost{position:sticky;top:28px;}
+  .proposal-preview{white-space:pre-wrap;background:#fff;padding:12px;border-radius:10px;border:1px dashed rgba(2,6,23,0.04);color:#475569;height:280px;overflow:auto;}
+  .footer{margin-top:22px;text-align:center;color:#9aa4b2;font-size:13px;}
+  /* small adjustments */
+  input[type="checkbox"]{width:16px;height:16px}
+  /* form alignment tweaks */
+  .field{margin-bottom:12px;}
+  .label-inline{display:flex;align-items:center;gap:10px;}
+  /* responsiveness for inputs */
+  @media(max-width:640px){
+    .radio-grid{grid-template-columns:repeat(1,1fr);}
+    .row{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+  <!-- Background with slow particles -->
+  <div class="bg-canvas" aria-hidden>
+    <!-- A handful of subtle particles; positions & sizes vary -->
+    <div class="particle" style="width:220px;height:220px;left:5%;top:-10%;background:radial-gradient(circle,#7A3BFF,transparent 40%);animation-duration:90s;opacity:0.06;"></div>
+    <div class="particle" style="width:320px;height:320px;left:70%;top:-20%;background:radial-gradient(circle,#00FFFF,transparent 30%);animation-duration:120s;opacity:0.05;"></div>
+    <div class="particle" style="width:180px;height:180px;left:30%;top:10%;background:radial-gradient(circle,#FFD95A,transparent 30%);animation-duration:100s;opacity:0.035;"></div>
+    <div class="particle" style="width:400px;height:400px;left:50%;top:-5%;background:radial-gradient(circle,#5B3FFF,transparent 35%);animation-duration:140s;opacity:0.03;"></div>
+  </div>
+
+  <div class="page">
+    <header>
+      <div id="brand">
+        <img id="brandLogo" src="images/logo.png" alt="Aion-IA Logo">
+        <div>
+          <div class="brand-title">Aion-IA Quantum Research Company</div>
+          <div class="brand-sub">Intelligence. Innovation. Impact.</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- LEFT: Main form -->
+      <main class="card" aria-live="polite">
+        <h1>Aion-IA Web Design Cost Calculator</h1>
+        <p class="lead">Choose Landing Page or E-Commerce first. Answer clear, atomic questions. Get a fixed quoted price and download a branded proposal.</p>
+
+        <!-- Step progress -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div class="small" id="stepLabel">Step 1 of 4 — Client Info</div>
+          <div class="small" id="progText">10%</div>
+        </div>
+
+        <form id="estForm" onsubmit="return false;">
+          <!-- Step 1: Client Info -->
+          <section id="step1" class="section" aria-labelledby="step1">
+            <h2 style="font-size:18px;margin-bottom:8px;">1. Client Information</h2>
+            <div class="row">
+              <div class="col field">
+                <label>Full Name</label>
+                <input id="fullName" class="input" type="text" placeholder="Your full name" required>
+              </div>
+              <div class="col field">
+                <label>Company Name</label>
+                <input id="companyName" class="input" type="text" placeholder="Company / Brand">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col field">
+                <label>Email address</label>
+                <input id="email" class="input" type="email" placeholder="you@company.com" required>
+              </div>
+              <div class="col field">
+                <label>Phone number</label>
+                <input id="phone" class="input" type="tel" placeholder="+91 9xxxxxxxxx" required>
+              </div>
+            </div>
+
+            <div class="section">
+              <label style="margin-bottom:8px;">Project Type</label>
+              <div class="radio-grid" id="projectTypeGroup" role="radiogroup" aria-label="Project type">
+                <label class="option" data-val="landing"><input name="projectType" type="radio" value="landing" aria-checked="false"> Landing Page Website</label>
+                <label class="option" data-val="ecommerce"><input name="projectType" type="radio" value="ecommerce" aria-checked="false"> E-Commerce Website</label>
+              </div>
+              <div class="small muted-note" style="margin-top:8px;">Select Landing for one-page/presence sites. Choose E-Commerce for online stores and product catalogs.</div>
+            </div>
+
+            <div class="actions">
+              <button id="toStep2" class="btn">Next: Requirements →</button>
+              <button id="resetBtn" type="button" class="btn ghost">Reset</button>
+            </div>
+          </section>
+
+          <!-- Step 2: Dynamic questions -->
+          <section id="step2" class="section hidden" aria-hidden="true">
+            <h2 style="font-size:18px;margin-bottom:8px;">2. Project Requirements</h2>
+            <p class="small">Answer the questions below. Only relevant questions will appear based on the project type selected.</p>
+
+            <div id="dynamicQuestions" style="margin-top:12px;"></div>
+
+            <div class="actions">
+              <button id="backTo1" type="button" class="btn ghost">← Back</button>
+              <button id="toStep3" type="button" class="btn">Next: Estimate →</button>
+            </div>
+          </section>
+
+          <!-- Step 3: Estimate -->
+          <section id="step3" class="section hidden" aria-hidden="true">
+            <h2 style="font-size:18px;margin-bottom:8px;">3. Live Estimate</h2>
+            <p class="small">Your selections are used to compute a fixed price (single value). No ranges — final price shown below is rounded to nearest ₹1,000.</p>
+
+            <div class="summary-tile" style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div class="small">Estimated Cost</div>
+                <div style="font-size:22px;font-weight:800;color:var(--text-dark);" id="estimatedPrice">₹0</div>
+              </div>
+              <div style="text-align:right">
+                <div class="small">Recommended Tier</div>
+                <div style="font-weight:700;color:#374151;" id="recommendedTier">—</div>
+                <div class="small" style="margin-top:8px;color:#6b7280;">Timeline: <span id="estimatedTimeline">—</span></div>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button id="backTo2" type="button" class="btn ghost">← Back</button>
+              <button id="toStep4" type="button" class="btn">Next: Proposal →</button>
+            </div>
+          </section>
+
+          <!-- Step 4: Proposal -->
+          <section id="step4" class="section hidden" aria-hidden="true">
+            <h2 style="font-size:18px;margin-bottom:8px;">4. Proposal & Download</h2>
+            <p class="small">Review the generated proposal below. Click to download a branded PDF for the client.</p>
+
+            <div id="proposalPreview" class="proposal-preview"></div>
+
+            <div class="actions" style="margin-top:12px;">
+              <button id="backTo3" type="button" class="btn ghost">← Back</button>
+              <button id="downloadPdf" type="button" class="btn">Download Proposal as PDF</button>
+            </div>
+          </section>
+        </form>
+      </main>
+
+      <!-- RIGHT: Live summary & estimator -->
+      <aside class="fixed-cost">
+        <div class="card" style="width:320px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <div>
+              <div class="small">Client</div>
+              <div id="sumClient" style="font-weight:700;color:var(--text-dark)">—</div>
+              <div id="sumCompany" class="small" style="color:#6b7280">—</div>
+            </div>
+            <div style="text-align:right">
+              <div class="small">Project</div>
+              <div id="sumProjectType" style="font-weight:700;color:var(--text-dark)">—</div>
+            </div>
+          </div>
+
+          <div class="summary-tile">
+            <div class="small">Live Cost</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+              <div style="font-weight:800;font-size:18px;color:var(--text-dark)" id="miniPrice">₹0</div>
+              <div style="text-align:right">
+                <div class="small">Tier</div>
+                <div id="miniTier" style="font-weight:700;color:#374151">—</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-tile">
+            <div class="small">Quick Stats</div>
+            <div style="margin-top:8px;font-size:13px;color:#6b7280;">
+              <div>Selected features update estimate in real time.</div>
+              <div style="margin-top:8px;">Rounding: nearest ₹1,000</div>
+            </div>
+          </div>
+
+          <div style="margin-top:10px;display:flex;gap:8px;">
+            <button id="editForm" class="btn ghost" style="flex:1">Edit</button>
+            <button id="startOver" class="btn" style="flex:1">Start Over</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="footer">© 2025 Aion-IA Quantum Research Company • contact@aion-ia.in</div>
+  </div>
+
+<script>
+/* =============================
+   Aion-IA Estimator — Quantum UI
+   Full single-file JS
+   ============================= */
+(function(){
+  // DOM refs
+  const toStep2Btn = document.getElementById('toStep2');
+  const toStep3Btn = document.getElementById('toStep3');
+  const toStep4Btn = document.getElementById('toStep4');
+  const backTo1Btn = document.getElementById('backTo1');
+  const backTo2Btn = document.getElementById('backTo2');
+  const backTo3Btn = document.getElementById('backTo3');
+  const resetBtn = document.getElementById('resetBtn');
+  const editForm = document.getElementById('editForm');
+  const startOver = document.getElementById('startOver');
+  const downloadPdfBtn = document.getElementById('downloadPdf');
+
+  const stepLabel = document.getElementById('stepLabel');
+  const progText = document.getElementById('progText');
+
+  const step1 = document.getElementById('step1');
+  const step2 = document.getElementById('step2');
+  const step3 = document.getElementById('step3');
+  const step4 = document.getElementById('step4');
+
+  const projectTypeGroup = document.getElementById('projectTypeGroup');
+  const dynamicQuestions = document.getElementById('dynamicQuestions');
+  const proposalPreview = document.getElementById('proposalPreview');
+
+  const sumClient = document.getElementById('sumClient');
+  const sumCompany = document.getElementById('sumCompany');
+  const sumProjectType = document.getElementById('sumProjectType');
+
+  const estimatedPrice = document.getElementById('estimatedPrice');
+  const recommendedTier = document.getElementById('recommendedTier');
+  const estimatedTimeline = document.getElementById('estimatedTimeline');
+
+  const miniPrice = document.getElementById('miniPrice');
+  const miniTier = document.getElementById('miniTier');
+
+  const fullName = document.getElementById('fullName');
+  const companyName = document.getElementById('companyName');
+  const email = document.getElementById('email');
+  const phone = document.getElementById('phone');
+
+  // state
+  let state = {
+    step:1,
+    client:{name:'',company:'',email:'',phone:''},
+    projectType:null, // 'landing'|'ecommerce'
+    answers:{} // key->value or array
+  };
+
+  // original base & min prices (from earlier detailed version)
+  const BASE_ORIG = {
+    landing:35000,
+    ecommerce:85000
+  };
+
+  // Price min-values map (original min values). We'll multiply by 1.2 here.
+  const ORIGINAL_MIN = {
+    // Landing page items
+    template:0, customDesign:25000, lightMode:0, darkMode:2000, bothModes:4000,
+    animations:4000, videoBg:3000, imageBg:1000,
+    sections3:0, sections5:3000, sections7:7000, sections10:12000,
+    contactForm:1500, leadCapture:2000, portfolio:4000,
+    logoDesign:5000, brandKit:6000, seoBasic:6000, analytics:1500,
+    hostingShared:3000, hostingCloud:8000, hostingDedicated:30000,
+    domainSetup:1000, support30:0, support3:3000, support6:6000,
+    // E-commerce items
+    productUnder50:0, product50to200:10000, product200plus:40000,
+    productCategoriesFew:0, productCategoriesMany:10000,
+    productVariants:6000, searchFilters:4000, shoppingCart:8000,
+    paymentGatewaySingle:30000, paymentGatewayMulti:50000, paymentGatewayUPI:40000, paymentGatewayNone:0,
+    orderTracking:15000, adminDashboard:30000, emailNotifications:8000, customerReviews:8000,
+    newsletter:10000, socialIntegration:10000,
+    backup:8000, support1m:0, support3m:5000, support6m:10000, support1y:20000
+  };
+
+  // Multiply all mins by 1.2 (20% higher)
+  const PRICES = {};
+  for(const k in ORIGINAL_MIN){
+    PRICES[k] = Math.round(ORIGINAL_MIN[k]*1.2);
+  }
+  // also update bases
+  const BASE = { landing: Math.round(BASE_ORIG.landing ), ecommerce: Math.round(BASE_ORIG.ecommerce ) };
+
+  // UI helpers
+  function updateProgress(step){
+    state.step = step;
+    const map = {1:'Step 1 of 4 — Client Info',2:'Step 2 of 4 — Requirements',3:'Step 3 of 4 — Estimate',4:'Step 4 of 4 — Proposal'};
+    stepLabel.textContent = map[step];
+    const pct = {1:10,2:40,3:70,4:100}[step];
+    progText.textContent = pct + '%';
+  }
+
+  // initial
+  updateProgress(1);
+
+  // click handlers
+  toStep2Btn.addEventListener('click', ()=>{
+    // validate client fields
+    if(!fullName.value.trim() || !email.value.trim() || !phone.value.trim()){
+      alert('Please fill required fields: Full name, Email, Phone.');
+      return;
+    }
+    const sel = document.querySelector('input[name="projectType"]:checked');
+    if(!sel){ alert('Please select project type: Landing Page or E-Commerce'); return; }
+    // store client info
+    state.client.name = fullName.value.trim();
+    state.client.company = companyName.value.trim();
+    state.client.email = email.value.trim();
+    state.client.phone = phone.value.trim();
+    state.projectType = sel.value; // 'landing' or 'ecommerce'
+    // update sidebar summary
+    sumClient.textContent = state.client.name;
+    sumCompany.textContent = state.client.company || '-';
+    sumProjectType.textContent = (state.projectType === 'landing' ? 'Landing Page' : 'E-Commerce');
+    // show step2 UI
+    step1.classList.add('hidden'); step2.classList.remove('hidden');
+    updateProgress(2);
+    renderDynamicQuestions();
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+
+  backTo1Btn.addEventListener('click', ()=>{
+    step2.classList.add('hidden'); step1.classList.remove('hidden');
+    updateProgress(1);
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+
+  toStep3Btn.addEventListener('click', ()=>{
+    // no mandatory checks for every question (client may leave some blank)
+    // compute estimates then show
+    computeEstimatesAndUpdateUI();
+    step2.classList.add('hidden'); step3.classList.remove('hidden');
+    updateProgress(3);
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+
+  backTo2Btn.addEventListener('click', ()=>{
+    step3.classList.add('hidden'); step2.classList.remove('hidden');
+    updateProgress(2);
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+
+  toStep4Btn.addEventListener('click', ()=>{
+    buildProposalPreview();
+    step3.classList.add('hidden'); step4.classList.remove('hidden');
+    updateProgress(4);
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+
+  backTo3Btn.addEventListener('click', ()=>{
+    step4.classList.add('hidden'); step3.classList.remove('hidden');
+    updateProgress(3);
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+
+  resetBtn.addEventListener('click', resetAll);
+  startOver.addEventListener('click', resetAll);
+  editForm.addEventListener('click', ()=>{ step4.classList.add('hidden'); step1.classList.remove('hidden'); updateProgress(1); });
+
+  // dynamic question rendering: use the previous detailed categories exactly
+  function renderDynamicQuestions(){
+    dynamicQuestions.innerHTML = ''; state.answers = {};
+    if(state.projectType === 'landing'){
+      // Landing categories: Design Preferences, Page Structure, Branding & SEO, Maintenance & Hosting
+      dynamicQuestions.appendChild(createAccordion('Design Preferences', [
+        createRadio('design_type','Do you prefer a template-based or custom design?', [
+          {val:'template',label:'Template-based'},
+          {val:'customDesign',label:'Custom design (premium)'}
+        ]),
+        createRadio('mode_pref','Do you want light mode, dark mode, or both?', [
+          {val:'lightMode',label:'Light Mode'},
+          {val:'darkMode',label:'Dark Mode'},
+          {val:'bothModes',label:'Both Light & Dark'}
+        ]),
+        createRadio('animations','Would you like scroll-based animations (fade, slide, or parallax)?', [
+          {val:'animations',label:'Yes — animations / parallax'},
+          {val:'no_animations',label:'No animations'}
+        ]),
+        createRadio('backgroundType','Do you want image or video background sections?', [
+          {val:'imageBg',label:'Image background'},
+          {val:'videoBg',label:'Video background'},
+          {val:'noBg',label:'No special background'}
+        ])
+      ]));
+
+      dynamicQuestions.appendChild(createAccordion('Page Structure', [
+        createSelect('sections','How many total sections (e.g., About, Services, Contact)?', [
+          {val:'sections3',label:'3 sections'},
+          {val:'sections5',label:'5 sections'},
+          {val:'sections7',label:'7 sections'},
+          {val:'sections10',label:'10 sections'}
+        ]),
+        createCheckbox('contactForm','Do you want a contact form?', [{val:'contactForm',label:'Contact form (name / email / message)'}]),
+        createCheckbox('leadCapture','Do you want a lead capture form?', [{val:'leadCapture',label:'Lead capture / email signup'}]),
+        createCheckbox('portfolio','Do you need a portfolio/gallery section?', [{val:'portfolio',label:'Portfolio / Gallery section'}])
+      ]));
+
+      dynamicQuestions.appendChild(createAccordion('Branding & SEO', [
+        createCheckbox('logoDesign','Do you need a new logo design?', [{val:'logoDesign',label:'Logo design (visual identity)'}]),
+        createCheckbox('brandKit','Do you need brand colors and typography setup?', [{val:'brandKit',label:'Brand kit (colors & fonts)'}]),
+        createCheckbox('seoBasic','Do you want basic SEO setup (meta tags & titles)?', [{val:'seoBasic',label:'Basic SEO setup'}]),
+        createCheckbox('analytics','Do you want Google Analytics integration?', [{val:'analytics',label:'Google Analytics integration'}])
+      ]));
+
+      dynamicQuestions.appendChild(createAccordion('Maintenance & Hosting', [
+        createRadio('hosting','Do you want hosting setup assistance?', [
+          {val:'hostingShared',label:'Shared hosting (cost efficient)'},
+          {val:'hostingCloud',label:'Cloud hosting (scalable)'},
+          {val:'hostingDedicated',label:'Dedicated hosting (enterprise)'},
+          {val:'noHosting',label:'No hosting required'}
+        ]),
+        createCheckbox('domainSetup','Do you want domain setup assistance?', [{val:'domainSetup',label:'Domain setup (DNS & config)'}]),
+        createRadio('supportDuration','How long do you want post-launch support?', [
+          {val:'support30',label:'30 days (basic)'},
+          {val:'support3',label:'3 months'},
+          {val:'support6',label:'6 months'}
+        ])
+      ]));
+    } else if(state.projectType === 'ecommerce'){
+      dynamicQuestions.appendChild(createAccordion('Design & Layout', [
+        createRadio('design_type','Do you prefer a template-based or custom design?', [
+          {val:'template',label:'Template-based'},
+          {val:'customDesign',label:'Custom design (premium)'}
+        ]),
+        createRadio('mode_pref','Do you want light mode, dark mode, or both?', [
+          {val:'lightMode',label:'Light Mode'},
+          {val:'darkMode',label:'Dark Mode'},
+          {val:'bothModes',label:'Both Light & Dark'}
+        ]),
+        createRadio('visuals','Would you like product-focused visuals or lifestyle imagery?', [
+          {val:'productFocused',label:'Product-focused visuals'},
+          {val:'lifestyle',label:'Lifestyle imagery'}
+        ]),
+        createRadio('hoverEffects','Do you want custom animations or hover effects?', [
+          {val:'hoverYes',label:'Yes — custom animations / hover effects'},
+          {val:'hoverNo',label:'No'}
+        ])
+      ]));
+
+      dynamicQuestions.appendChild(createAccordion('Store Details', [
+        createRadio('productCount','How many products will your store have?', [
+          {val:'productUnder50',label:'Less than 50'},
+          {val:'product50to200',label:'50–200'},
+          {val:'product200plus',label:'200+'}
+        ]),
+        createSelect('productCategories','How many product categories do you need?', [
+          {val:'productCategoriesFew',label:'Few (1–10)'},
+          {val:'productCategoriesMany',label:'Many (10+)'}
+        ]),
+        createCheckbox('variants','Do you need product variants (sizes, colors)?', [{val:'productVariants',label:'Product variants (size, color)'}]),
+        createCheckbox('filters','Do you want a search bar with filters?', [{val:'searchFilters',label:'Search with filters (price, size, color)'}])
+      ]));
+
+      dynamicQuestions.appendChild(createAccordion('Features & Functionality', [
+        createCheckbox('cart','Do you need a shopping cart?', [{val:'shoppingCart',label:'Shopping cart (add to cart / checkout)'}]),
+        // Payment gateway with explicit "No payment gateway"
+        createRadio('payment','Do you need a payment gateway?', [
+          {val:'paymentGatewaySingle',label:'Single gateway (cards / netbanking)'},
+          {val:'paymentGatewayMulti',label:'Multiple gateways + wallets'},
+          {val:'paymentGatewayUPI',label:'UPI integration'},
+          {val:'paymentGatewayNone',label:'No payment gateway needed'}
+        ]),
+        createCheckbox('orderTrack','Do you need order tracking and management?', [{val:'orderTracking',label:'Order tracking & management'}]),
+        createCheckbox('admin','Do you need an admin dashboard?', [{val:'adminDashboard',label:'Admin dashboard (manage products / orders)'}]),
+        createCheckbox('emailNotif','Do you want email notifications for orders?', [{val:'emailNotifications',label:'Email notifications for orders'}]),
+        createCheckbox('reviews','Do you want customer reviews on products?', [{val:'customerReviews',label:'Customer reviews on product pages'}])
+      ]));
+
+      dynamicQuestions.appendChild(createAccordion('Marketing & Analytics', [
+        createCheckbox('seoBasic','Do you want basic SEO setup?', [{val:'seoBasic',label:'Basic SEO setup (meta & titles)'}]),
+        createCheckbox('seoAdvanced','Do you want advanced SEO + Google Analytics?', [{val:'seoAdvanced',label:'Advanced SEO + Analytics'}]),
+        createCheckbox('newsletter','Do you want newsletter subscription integration?', [{val:'newsletter',label:'Newsletter integration (email capture)'}]),
+        createCheckbox('social','Do you want social media integration?', [{val:'socialIntegration',label:'Social media integration (LinkedIn/Instagram)'}])
+      ]));
+
+      dynamicQuestions.appendChild(createAccordion('Maintenance & Hosting', [
+        createRadio('hosting','Do you need hosting setup?', [
+          {val:'hostingShared',label:'Shared hosting'},
+          {val:'hostingCloud',label:'Cloud hosting'},
+          {val:'hostingDedicated',label:'Dedicated hosting'}
+        ]),
+        createCheckbox('backup','Do you need regular backups?', [{val:'backup',label:'Regular backups & restore'}]),
+        createRadio('supportDuration','How long do you need support & maintenance?', [
+          {val:'support1m',label:'1 month'},
+          {val:'support3m',label:'3 months'},
+          {val:'support6m',label:'6 months'},
+          {val:'support1y',label:'1 year'}
+        ])
+      ]));
+    }
+
+    attachListeners();
+  }
+
+  // ===== Factories for form controls (atomic questions) =====
+  function createAccordion(title, items){
+    const el = document.createElement('details');
+    el.className = 'accordion';
+    el.open = true;
+    const s = document.createElement('summary');
+    s.innerHTML = `<strong>${title}</strong><span class="small" style="color:#6b7280">expand</span>`;
+    el.appendChild(s);
+    const content = document.createElement('div'); content.className = 'content';
+    items.forEach(i => content.appendChild(i));
+    el.appendChild(content);
+    return el;
+  }
+
+  function createRadio(name, prompt, options){
+    const container = document.createElement('div'); container.className = 'section';
+    const lbl = document.createElement('label'); lbl.textContent = prompt; container.appendChild(lbl);
+    const grid = document.createElement('div'); grid.className = 'radio-grid';
+    options.forEach(opt=>{
+      const l = document.createElement('label'); l.className = 'option';
+      l.innerHTML = `<input type="radio" name="${name}" value="${opt.val}"> <span style="font-size:14px;color:#172554">${opt.label}</span>`;
+      l.addEventListener('click', ()=>{ Array.from(grid.children).forEach(c=>c.classList.remove('selected')); l.classList.add('selected'); });
+      grid.appendChild(l);
+    });
+    container.appendChild(grid);
+    return container;
+  }
+
+  function createCheckbox(name, prompt, options){
+    const container = document.createElement('div'); container.className = 'section';
+    const lbl = document.createElement('label'); lbl.textContent = prompt; container.appendChild(lbl);
+    const wrapper = document.createElement('div');
+    options.forEach(opt=>{
+      const l = document.createElement('label'); l.className = 'option';
+      l.innerHTML = `<input type="checkbox" name="${name}" value="${opt.val}"> <span style="font-size:14px;color:#172554">${opt.label}</span>`;
+      l.addEventListener('click', ()=>{ l.classList.toggle('selected'); });
+      wrapper.appendChild(l);
+    });
+    container.appendChild(wrapper);
+    return container;
+  }
+
+  function createSelect(name, prompt, options){
+    const container = document.createElement('div'); container.className = 'section';
+    const lbl = document.createElement('label'); lbl.textContent = prompt; container.appendChild(lbl);
+    const sel = document.createElement('select'); sel.name = name; sel.className='input';
+    options.forEach(o=>{
+      const opt = document.createElement('option'); opt.value = o.val; opt.textContent = o.label; sel.appendChild(opt);
+    });
+    container.appendChild(sel);
+    return container;
+  }
+
+  // attach listeners to dynamic controls
+  function attachListeners(){
+    // every input/select inside dynamicQuestions
+    const inputs = dynamicQuestions.querySelectorAll('input,select');
+    inputs.forEach(inp=>{
+      inp.addEventListener('change', ()=>{
+        // rebuild state.answers
+        buildAnswersFromDom();
+        computeEstimatesAndUpdateUI();
+      });
+    });
+  }
+
+  // Reads current selections into state.answers (atomic keys)
+  function buildAnswersFromDom(){
+    const allInputs = dynamicQuestions.querySelectorAll('input,select');
+    const answers = {};
+    allInputs.forEach(i=>{
+      if(i.type === 'radio'){
+        if(i.checked) answers[i.name] = i.value;
+      } else if(i.type === 'checkbox'){
+        if(!answers[i.name]) answers[i.name] = [];
+        if(i.checked) answers[i.name].push(i.value);
+      } else if(i.tagName.toLowerCase() === 'select'){
+        answers[i.name] = i.value;
+      }
+    });
+    state.answers = answers;
+  }
+
+  // compute final fixed price using PRICES map & BASE, rounding to nearest 1000
+  function computeEstimatesAndUpdateUI(){
+    const base = BASE[state.projectType];
+    let total = Number(base);
+    // iterate answers
+    for(const key in state.answers){
+      const val = state.answers[key];
+      if(Array.isArray(val)){
+        val.forEach(v=>{
+          if(PRICES[v]) total += PRICES[v];
+        });
+      } else {
+        // val is string
+        // sometimes radio answer uses keys like 'no_animations' or 'noBg' that don't map to prices
+        if(PRICES[val]) total += PRICES[val];
+      }
+    }
+    // Round to nearest 1000
+    total = Math.round(total / 1000) * 1000;
+    // determine tier & timeline heuristics (based on mid-range logic)
+    let tier='Basic', timeline='2–3 weeks';
+    if(state.projectType === 'landing'){
+      if(total < 50000){ tier='Basic'; timeline='5–10 days'; }
+      else if(total < 90000){ tier='Intermediate'; timeline='2–3 weeks'; }
+      else { tier='Advanced'; timeline='3–5 weeks'; }
+    } else {
+      if(total < 150000){ tier='Essential'; timeline='3–5 weeks'; }
+      else if(total < 350000){ tier='Growth'; timeline='6–10 weeks'; }
+      else { tier='Enterprise'; timeline='10–16+ weeks'; }
+    }
+
+    // update UI
+    const formatted = formatINR(total);
+    estimatedPrice.textContent = formatted;
+    recommendedTier.textContent = tier;
+    estimatedTimeline.textContent = timeline;
+    miniPrice.textContent = formatted;
+    miniTier.textContent = tier;
+    // store for pdf
+    step3.dataset.total = total;
+  }
+
+  // PROPOSAL generation text
+  function buildProposalPreview(){
+    const name = state.client.name || fullName.value || 'Client';
+    const company = state.client.company || companyName.value || '';
+    const project = state.projectType === 'landing' ? 'Landing Page Website' : 'E-Commerce Website';
+    let txt = `Proposal — Aion-IA Quantum Research Company\n\nTo: ${name}\nCompany: ${company}\nProject: ${project}\n\nSelected Options:\n`;
+    // iterate state.answers
+    for(const key in state.answers){
+      const ans = state.answers[key];
+      if(Array.isArray(ans)){
+        if(ans.length) txt += `${friendlyKey(key)}: ${ans.map(a=>friendlyVal(a)).join(', ')}\n`;
+      } else {
+        txt += `${friendlyKey(key)}: ${friendlyVal(ans)}\n`;
+      }
+    }
+    txt += `\nEstimated Cost (fixed): ${formatINR(Number(step3.dataset.total || 0))}\n`;
+    txt += `Estimated Timeline: ${estimatedTimeline.textContent}\n`;
+    txt += `Recommended Package: ${recommendedTier.textContent}\n\nNotes:\n• This is a fixed estimate based on selected options.\n• Final scope & contract will be confirmed after discovery.\n\nGenerated by Aion-IA • contact@aion-ia.in`;
+    proposalPreview.textContent = txt;
+  }
+
+  // PDF generation (branded)
+  downloadPdfBtn.addEventListener('click', ()=>{
+    // ensure proposal preview built
+    buildProposalPreview();
+    const name = state.client.name || fullName.value || 'Client';
+    const company = state.client.company || companyName.value || '';
+    const total = Number(step3.dataset.total || 0);
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({unit:'pt', format:'a4'});
+    // header strip
+    doc.setFillColor(6,10,18);
+    doc.rect(0,0,595,80,'F');
+    // brand title
+    doc.setFontSize(18); doc.setTextColor(255,255,255);
+    doc.text('Aion-IA Quantum Research Company', 40, 50);
+    // content
+    let y = 110;
+    doc.setFontSize(12); doc.setTextColor(10,10,10);
+    doc.text(`Proposal For: ${name}`, 40, y); y+=18;
+    doc.text(`Company: ${company}`, 40, y); y+=18;
+    doc.text(`Project: ${state.projectType === 'landing' ? 'Landing Page Website' : 'E-Commerce Website'}`, 40, y); y+=22;
+
+    doc.setFontSize(13);
+    doc.text('Selected Options:', 40, y); y+=16;
+    doc.setFontSize(11);
+    for(const key in state.answers){
+      const ans = state.answers[key];
+      let line = `${friendlyKey(key)}: `;
+      if(Array.isArray(ans)) line += ans.map(a=>friendlyVal(a)).join(', ');
+      else line += friendlyVal(ans);
+      const split = doc.splitTextToSize(line, 520);
+      doc.text(split, 40, y); y += split.length * 14;
+      if(y > 720){ doc.addPage(); y = 40; }
+    }
+
+    // totals
+    y += 8;
+    doc.setFontSize(13);
+    doc.text(`Estimated Cost (fixed): ${formatINR(total)}`, 40, y); y+=18;
+    doc.text(`Estimated Timeline: ${estimatedTimeline.textContent}`, 40, y); y+=18;
+    doc.text(`Recommended Package: ${recommendedTier.textContent}`, 40, y); y+=24;
+
+    doc.setFontSize(10);
+    doc.text('Notes:', 40, y); y+=14;
+    const notes = ['• This is a fixed estimate based on selected options.',
+                   '• Final scope and contract will be confirmed after technical review.',
+                   '• To proceed, request a detailed proposal or book a consultation.'];
+    const noteLines = doc.splitTextToSize(notes.join('\n'), 520);
+    doc.text(noteLines, 40, y); y += noteLines.length * 12;
+
+    // footer
+    doc.setFontSize(9); doc.setTextColor(120);
+    doc.text('Generated by Aion-IA Quantum Research Company • contact@aion-ia.in', 40, 780);
+
+    const safeName = name.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_\-]/g,'') || 'Client';
+    doc.save(`Aion-IA_Proposal_${safeName}.pdf`);
+  });
+
+  // reset
+  function resetAll(){
+    document.getElementById('estForm').reset();
+    dynamicQuestions.innerHTML = '';
+    proposalPreview.textContent = '';
+    step1.classList.remove('hidden'); step2.classList.add('hidden'); step3.classList.add('hidden'); step4.classList.add('hidden');
+    state = {step:1, client:{}, projectType:null, answers:{}};
+    sumClient.textContent = '—'; sumCompany.textContent='—'; sumProjectType.textContent='—';
+    miniPrice.textContent = '₹0'; miniTier.textContent = '—'; estimatedPrice.textContent = '₹0'; recommendedTier.textContent='—'; estimatedTimeline.textContent='—';
+    updateProgress(1);
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  // make friendly labels for keys (used in proposal)
+  function friendlyKey(k){
+    const map = {
+      design_type:'Design type', mode_pref:'Color mode', animations:'Animations', backgroundType:'Background type',
+      sections:'Sections', contactForm:'Contact form', leadCapture:'Lead capture', portfolio:'Portfolio',
+      logoDesign:'Logo design', brandKit:'Brand kit', seoBasic:'Basic SEO', analytics:'Analytics',
+      hosting:'Hosting', domainSetup:'Domain setup', supportDuration:'Support duration',
+      productCount:'Products', productCategories:'Product categories', variants:'Product variants', filters:'Search & filters',
+      cart:'Shopping cart', payment:'Payment gateway', orderTrack:'Order tracking', admin:'Admin dashboard',
+      emailNotif:'Email notifications', reviews:'Customer reviews', visuals:'Visuals', hoverEffects:'Hover/Effects',
+      seoAdvanced:'Advanced SEO', newsletter:'Newsletter', social:'Social integration', backup:'Backups'
+    };
+    return map[k] || k;
+  }
+  function friendlyVal(v){
+    const map = {
+      template:'Template-based', customDesign:'Custom design', lightMode:'Light Mode', darkMode:'Dark Mode', bothModes:'Both modes',
+      animations:'Animations', no_animations:'No animations', imageBg:'Image background', videoBg:'Video background', noBg:'No background',
+      sections3:'3 sections', sections5:'5 sections', sections7:'7 sections', sections10:'10 sections',
+      contactForm:'Contact form', leadCapture:'Lead capture', portfolio:'Portfolio/Gallery',
+      logoDesign:'Logo design', brandKit:'Brand kit', seoBasic:'Basic SEO', analytics:'Google Analytics',
+      hostingShared:'Shared hosting', hostingCloud:'Cloud hosting', hostingDedicated:'Dedicated hosting', noHosting:'No hosting',
+      support30:'30 days', support3:'3 months', support6:'6 months',
+      productUnder50:'<50 products', product50to200:'50–200 products', product200plus:'200+ products',
+      productCategoriesFew:'Few categories', productCategoriesMany:'Many categories',
+      productVariants:'Product variants', searchFilters:'Search & filters',
+      shoppingCart:'Shopping cart', paymentGatewaySingle:'Single gateway', paymentGatewayMulti:'Multiple gateways', paymentGatewayUPI:'UPI', paymentGatewayNone:'No payment gateway',
+      orderTracking:'Order tracking', adminDashboard:'Admin dashboard', emailNotifications:'Email notifications',
+      customerReviews:'Customer reviews', productFocused:'Product-focused visuals', lifestyle:'Lifestyle imagery',
+      hoverYes:'Animations / hover effects', hoverNo:'No hover effects', seoAdvanced:'Advanced SEO + Analytics',
+      newsletter:'Newsletter integration', socialIntegration:'Social integration', backup:'Backups',
+      domainSetup:'Domain setup', support1m:'1 month', support3m:'3 months', support6m:'6 months', support1y:'1 year'
+    };
+    return map[v] || v;
+  }
+
+  // formatting INR
+  function formatINR(v){ return '₹' + Number(v).toLocaleString('en-IN'); }
+
+  // initial reset
+  resetAll();
+
+  // update sidebar client info live
+  fullName.addEventListener('input', ()=>{ sumClient.textContent = fullName.value || '—'; });
+  companyName.addEventListener('input', ()=>{ sumCompany.textContent = companyName.value || '—'; });
+
+})();
+</script>
+</body>
+</html>

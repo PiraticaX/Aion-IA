@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aion-IA | Courses</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#070a12; /* deep space */
+      --card:#0f1424cc; /* glass */
+      --border:#4d6aff; /* neon */
+      --accent:#a855f7; /* purple */
+      --accent2:#22d3ee; /* cyan */
+      --txt:#eaf0ff; /* light */
+      --muted:#9fb0ff; /* muted */
+      --good:#10b981; /* green */
+      --warn:#f59e0b; /* amber */
+      --danger:#ef4444; /* red */
+      --shadow:0 10px 30px rgba(77,106,255,.25), 0 0 60px rgba(168,85,247,.15);
+    }
+    *{ box-sizing:border-box }
+    html,body{ height:100% }
+    body{
+      margin:0; font-family:'Outfit', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color:var(--txt);
+      background: radial-gradient(1200px 800px at 10% -10%, rgba(77,106,255,.25), transparent 60%),
+                  radial-gradient(1000px 700px at 110% 10%, rgba(34,211,238,.18), transparent 60%),
+                  radial-gradient(900px 600px at 50% 120%, rgba(168,85,247,.2), transparent 60%),
+                  var(--bg);
+      overflow-x:hidden;
+    }
+    /* animated starfield */
+    .stars, .stars:after{
+      position:fixed; inset:0; pointer-events:none; content:""; display:block;
+      background-image: radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,.6), transparent 60%),
+                        radial-gradient(1px 1px at 150px 80px, rgba(255,255,255,.35), transparent 60%),
+                        radial-gradient(2px 2px at 90% 20%, rgba(255,255,255,.45), transparent 60%),
+                        radial-gradient(1px 1px at 70% 70%, rgba(255,255,255,.3), transparent 60%),
+                        radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,.4), transparent 60%);
+      animation: drift 60s linear infinite;
+      opacity:.6;
+    }
+    .stars:after{ animation-duration: 120s; opacity:.35; filter:blur(.3px) }
+    @keyframes drift{ from{ transform:translateY(0)} to{ transform:translateY(-2000px)} }
+
+    header{
+      position:sticky; top:0; z-index:10; backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(7,10,18,.75), rgba(7,10,18,.35) 60%, rgba(7,10,18,0));
+      border-bottom:1px solid rgba(167,139,250,.12);
+    }
+    .nav{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px clamp(16px, 5vw, 40px); }
+    .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--txt) }
+    .logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  position: relative;
+  isolation: isolate;
+  background: #000; /* changed from gradient to solid black */
+  box-shadow: var(--shadow);
+}
+.logo:after {
+  content: "AI";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  letter-spacing: .5px;
+  color: white;
+  mix-blend: normal; /* remove overlay so text stays clear */
+}
+    .brand h1{ font-size:18px; margin:0; font-weight:700; letter-spacing:.5px }
+
+    .back-btn{
+      display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px;
+      background:linear-gradient(135deg, rgba(77,106,255,.15), rgba(168,85,247,.15));
+      border:1px solid rgba(167,139,250,.35); color:var(--txt); text-decoration:none; font-weight:600;
+      box-shadow:0 6px 20px rgba(77,106,255,.15); transition: transform .18s ease, box-shadow .2s ease; backdrop-filter: blur(6px);
+    }
+    .back-btn:hover{ transform: translateY(-2px); box-shadow: 0 10px 24px rgba(77,106,255,.25) }
+
+    .hero{ padding: clamp(28px, 6vw, 72px) clamp(16px, 5vw, 40px) 24px; text-align:center }
+    .eyebrow{ color:var(--muted); font-weight:600; letter-spacing:1.5px; text-transform:uppercase; font-size:12px }
+    .title{ font-size:clamp(28px, 4.2vw, 56px); margin:12px auto; line-height:1.08; font-weight:800; max-width:1000px; }
+    .subtitle{ color: #c7d2fe; max-width:900px; margin:0 auto; font-size:clamp(14px, 2vw, 18px) }
+
+    .filters{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; padding:22px 12px 10px }
+    .chip{
+      border:1px solid rgba(99,102,241,.35); color:var(--txt); padding:10px 14px; border-radius:999px; cursor:pointer;
+      background:linear-gradient(135deg, rgba(79,70,229,.15), rgba(168,85,247,.1)); font-weight:600;
+      transition:transform .16s ease, box-shadow .2s ease, background .2s ease; user-select:none;
+    }
+    .chip.active{ box-shadow:0 8px 28px rgba(99,102,241,.25), inset 0 0 20px rgba(147,197,253,.12); border-color: var(--border) }
+    .chip:hover{ transform:translateY(-2px) }
+
+    .grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:18px; padding:24px clamp(16px, 5vw, 40px) 80px; }
+
+    .card{
+      position:relative; padding:18px; border-radius:18px; background:linear-gradient(180deg, rgba(17,24,39,.65), rgba(17,24,39,.45));
+      border:1px solid rgba(148,163,255,.22); box-shadow: var(--shadow); overflow:hidden; cursor:pointer; min-height:180px;
+      transition: transform .18s ease, box-shadow .22s ease, border-color .2s ease;
+    }
+    .card:hover{ transform: translateY(-4px); border-color: rgba(148,163,255,.45); box-shadow: 0 20px 50px rgba(49,46,129,.35) }
+    .card .track{ font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#c4b5fd }
+    .card h3{ margin:8px 0 6px; font-size:18px }
+    .card p{ margin:0; color:#cbd5e1; font-size:14px }
+    .badgebar{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px }
+    .badge{ font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid rgba(99,102,241,.35); color:#e0e7ff; background:linear-gradient(135deg, rgba(37,99,235,.12), rgba(168,85,247,.12)) }
+
+    /* Modal */
+    .modal-overlay{ position:fixed; inset:0; background:rgba(7,10,18,.55); backdrop-filter: blur(4px); display:none; align-items:center; justify-content:center; padding:20px; z-index:30 }
+    .modal-overlay.show{ display:flex }
+    .modal{
+      width:min(880px, 96vw); border-radius:20px; border:1px solid rgba(148,163,255,.35);
+      background:linear-gradient(180deg, rgba(17,24,39,.92), rgba(17,24,39,.8));
+      box-shadow: 0 30px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(99,102,241,.15) inset; position:relative; overflow:hidden; transform:scale(.96); opacity:0;
+      transition: transform .2s ease, opacity .2s ease;
+    }
+    .modal.show{ transform:scale(1); opacity:1 }
+    .modal-header{ padding:18px 18px 0 18px; display:flex; align-items:flex-start; gap:14px }
+    .modal-hero{ flex:0 0 54px; height:54px; border-radius:16px; background:linear-gradient(135deg, var(--border), var(--accent)); box-shadow:var(--shadow) }
+    .modal-title{ margin:0; font-size:22px }
+    .modal-sub{ margin:2px 0 0 0; color:#c7d2fe; font-size:14px }
+    .close{ position:absolute; right:12px; top:12px; border:none; background:transparent; color:#e5e7eb; font-size:22px; width:38px; height:38px; border-radius:12px; cursor:pointer }
+    .close:hover{ background: rgba(99,102,241,.18) }
+
+    .modal-body{ padding:4px 18px 18px 18px }
+    .pillbar{ display:flex; gap:10px; flex-wrap:wrap; margin:12px 0 10px }
+    .pill{ font-size:12px; padding:8px 12px; border-radius:999px; border:1px solid rgba(99,102,241,.35); background:linear-gradient(135deg, rgba(59,130,246,.18), rgba(168,85,247,.15)) }
+
+    .topics{ display:grid; grid-template-columns:1.2fr .8fr; gap:18px; align-items:start; margin-top:12px }
+    .topics ul{ margin:10px 0 0 18px; padding:0; line-height:1.6 }
+    .topics li{ margin:2px 0; color:#e2e8f0 }
+    .cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:16px }
+    .btn{
+      padding:12px 16px; border-radius:14px; border:1px solid rgba(99,102,241,.35); color:var(--txt); background:linear-gradient(135deg, rgba(99,102,241,.2), rgba(168,85,247,.2));
+      font-weight:700; letter-spacing:.2px; cursor:pointer; box-shadow: var(--shadow); transition: transform .16s ease, box-shadow .2s ease
+    }
+    .btn:hover{ transform: translateY(-2px) }
+
+    footer{ padding:30px 16px 60px; text-align:center; color:#c7d2fe; border-top:1px solid rgba(167,139,250,.12); background:linear-gradient(0deg, rgba(7,10,18,.5), rgba(7,10,18,0)) }
+    .foot{ max-width:900px; margin:0 auto; font-size:14px }
+
+    @media (max-width:840px){ .topics{ grid-template-columns:1fr } }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <header>
+    <div class="nav">
+      <!-- Top-left logo links to homepage -->
+      <a class="brand" href="/">
+        <img src="images/logo.png" alt="Aion-IA Logo" class="logo" />
+        <h1>Aion-IA</h1>
+     </a>
+      <!-- Top-right back button -->
+      <a class="back-btn" href="/">⟵ Back</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">Future-Ready Programs</div>
+    <h2 class="title">Master Quantum Computing, LLMs & AI — Designed for Engineers, Researchers & Business Leaders</h2>
+    <p class="subtitle">Click a course to zoom into details (duration, fees, topics). Filter by track to discover your perfect fit.</p>
+
+    <!-- Filters -->
+    <div class="filters" id="filters"></div>
+  </section>
+
+  <!-- Course Cards Grid -->
+  <main class="grid" id="grid"></main>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <article class="modal" id="modal">
+      <button class="close" id="close" aria-label="Close">✕</button>
+      <div class="modal-header">
+        <div class="modal-hero" aria-hidden="true"></div>
+        <div>
+          <h3 class="modal-title" id="m-title"></h3>
+          <p class="modal-sub" id="m-sub"></p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="pillbar">
+          <span class="pill" id="m-duration"></span>
+          <span class="pill" id="m-fees"></span>
+          <span class="pill" id="m-track"></span>
+        </div>
+        <div class="topics">
+          <div>
+            <h4>What you'll learn</h4>
+            <ul id="m-topics"></ul>
+          </div>
+          <div>
+            <h4>Who is this for</h4>
+            <ul id="m-audience"></ul>
+          </div>
+        </div>
+        <div class="cta">
+          <button class="btn" id="enrollBtn">Enroll Now</button>
+          <button class="btn" id="brochureBtn">Download Brochure (PDF)</button>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <footer>
+    <div class="foot">🔮 Aion-IA — Shaping the future of Quantum, AI & Innovation. Connect with us on LinkedIn · Twitter · YouTube</div>
+  </footer>
+
+  <script>
+    // ------- Data -------
+    const COURSES = [
+      // Quantum Computing
+      {
+        id: 'qc-eng',
+        title: 'Quantum Computing for Engineers',
+        track: 'Quantum Computing',
+        audienceLabel: 'Engineers (B.Tech/M.Tech: ECE, CSE, EE, ME)',
+        audience: ['B.Tech / M.Tech students', 'Junior engineers & developers', 'Faculty upskilling'],
+        duration: '3 months',
+        fees: '25,000',
+        tagline: 'Hands-on circuits, algorithms, and Qiskit.',
+        topics: [
+          'Quantum states, gates & multi-qubit circuits',
+          'Grover, Deutsch–Jozsa & QFT essentials',
+          'Qiskit programming & simulators',
+          'Use-cases in optimization & materials',
+        ],
+      },
+      {
+        id: 'qc-researchers',
+        title: 'Quantum Computing for Researchers',
+        track: 'Quantum Computing',
+        audienceLabel: 'Researchers (MSc/PhD in Physics/CS/Math/Chem/Bio)',
+        audience: ['MSc/PhD scholars', 'Research engineers', 'Faculty & independent researchers'],
+        duration: '6 months',
+        fees: '50,000',
+        tagline: 'Deep theory + publishable project track.',
+        topics: [
+          'Quantum information, complexity & entanglement',
+          'Quantum error correction & fault tolerance',
+          'VQE, QAOA & quantum chemistry',
+          'Paper writing & open-source contributions',
+        ],
+      },
+      {
+        id: 'qc-business',
+        title: 'Quantum Computing for Business Leaders',
+        track: 'Quantum Computing',
+        audienceLabel: 'MBA/BBA (Exec program)',
+        audience: ['Strategy & product leaders', 'Consultants & founders', 'MBA/BBA students'],
+        duration: '1.5 months',
+        fees: '40,000',
+        tagline: 'Strategy, ROI and competitive advantage with QC.',
+        topics: [
+          'Quantum value chain & ecosystem',
+          'Finance, logistics & cybersecurity use-cases',
+          'Build vs buy, partnerships & GTM',
+          'Risk, compliance & governance',
+        ],
+      },
+      {
+        id: 'qc-bca',
+        title: 'Quantum Computing for BCA Students',
+        track: 'Quantum Computing',
+        audienceLabel: 'BCA / MCA',
+        audience: ['BCA/MCA students', 'Career switchers', 'Intern-ready candidates'],
+        duration: '2 months',
+        fees: '15,000',
+        tagline: 'Coding-first intro to quantum with projects.',
+        topics: [
+          'Qubits, circuits & basic algorithms',
+          'Python + Qiskit hands-on',
+          'Simulators & simple hardware runs',
+          'Mini capstone: QC app prototype',
+        ],
+      },
+      {
+        id: 'qcrypto',
+        title: 'Quantum Cryptography & Security',
+        track: 'Quantum Computing',
+        audienceLabel: 'Cybersecurity students & professionals',
+        audience: ['Security engineers', 'Network admins', 'CS students aiming for security'],
+        duration: '3 months',
+        fees: '30,000',
+        tagline: 'QKD, PQC, quantum-safe architectures.',
+        topics: [
+          'Quantum Key Distribution & protocols',
+          'Post-Quantum Cryptography overview',
+          'Quantum-safe network architecture',
+          'Threat modeling & migration roadmap',
+        ],
+      },
+      {
+        id: 'qml-ds',
+        title: 'Quantum Machine Learning for Data Scientists',
+        track: 'Quantum Computing',
+        audienceLabel: 'Data Scientists & ML Engineers',
+        audience: ['Data scientists', 'ML/AI engineers', 'Researchers exploring QML'],
+        duration: '4 months',
+        fees: '40,000',
+        tagline: 'Hybrid quantum-classical pipelines with PennyLane & Qiskit.',
+        topics: [
+          'Quantum data encoding & feature maps',
+          'Variational circuits & training',
+          'Quantum kernels & generative models',
+          'Use-cases: chemistry, finance, materials',
+        ],
+      },
+
+      // LLM & Data Science
+      {
+        id: 'llm-eng',
+        title: 'LLM & Data Science for Engineers',
+        track: 'LLM & Data Science',
+        audienceLabel: 'Engineers (full-stack AI/ML)',
+        audience: ['Software/ML engineers', 'B.Tech/M.Tech'],
+        duration: '4 months',
+        fees: '35,000',
+        tagline: 'Build, fine-tune & deploy LLM apps with MLOps.',
+        topics: [
+          'Vector DBs, RAG & evaluation',
+          'Fine-tuning, LoRA & adapters',
+          'Prompt engineering & agents',
+          'Deployment & monitoring (MLOps)',
+        ],
+      },
+      {
+        id: 'llm-bca',
+        title: 'LLM & Data Science for BCA Students',
+        track: 'LLM & Data Science',
+        audienceLabel: 'BCA/MCA (coding-first)',
+        audience: ['BCA/MCA students', 'Junior devs'],
+        duration: '3 months',
+        fees: '20,000',
+        tagline: 'Practical LLM apps, datasets & APIs.',
+        topics: [
+          'Data wrangling & feature engineering',
+          'APIs, embeddings & RAG basics',
+          'Mini projects: chatbots, summarizers',
+          'Capstone: domain LLM app',
+        ],
+      },
+      {
+        id: 'llm-research',
+        title: 'LLM & Data Science for Researchers',
+        track: 'LLM & Data Science',
+        audienceLabel: 'Researchers (publications & advanced models)',
+        audience: ['MSc/PhD', 'Applied research engineers'],
+        duration: '6 months',
+        fees: '50,000',
+        tagline: 'SOTA models, evaluation & reproducible research.',
+        topics: [
+          'LLM architectures & training recipes',
+          'Eval frameworks & benchmarks',
+          'Efficient fine-tuning (QLoRA etc.)',
+          'Paper pipeline & open-sourcing',
+        ],
+      },
+      {
+        id: 'llm-biz',
+        title: 'LLM in Business Analytics for MBA/BBA',
+        track: 'LLM & Data Science',
+        audienceLabel: 'MBA/BBA (case-study driven)',
+        audience: ['Product/ops leaders', 'Consultants', 'MBA/BBA'],
+        duration: '2 months',
+        fees: '30,000',
+        tagline: 'Apply LLMs to marketing, finance, HR & ops.',
+        topics: [
+          'Use-cases & ROI measurement',
+          'Data privacy, compliance & risk',
+          'Vendor evaluation & build/buy decisions',
+          'Adoption playbooks & change mgmt',
+        ],
+      },
+
+      // AI & Data Science
+      {
+        id: 'ai-eng',
+        title: 'AI & Data Science for Engineers',
+        track: 'AI & Data Science',
+        audienceLabel: 'Engineers (full-stack ML)',
+        audience: ['Software/ML engineers', 'B.Tech/M.Tech'],
+        duration: '4 months',
+        fees: '35,000',
+        tagline: 'From modeling to deployment with MLOps.',
+        topics: [
+          'Supervised/unsupervised/deep learning',
+          'Model serving & monitoring',
+          'Feature stores & pipelines',
+          'Real-world capstone',
+        ],
+      },
+      {
+        id: 'ai-bca',
+        title: 'AI & Data Science for BCA Students',
+        track: 'AI & Data Science',
+        audienceLabel: 'BCA/MCA (applications + integration)',
+        audience: ['BCA/MCA students', 'Junior devs'],
+        duration: '3 months',
+        fees: '20,000',
+        tagline: 'End-to-end projects with APIs & dashboards.',
+        topics: [
+          'Python stack & ML essentials',
+          'Model APIs & integrations',
+          'Dashboards & reporting',
+          'Team capstone',
+        ],
+      },
+      {
+        id: 'ai-biz',
+        title: 'AI & Data Science for MBA/BBA',
+        track: 'AI & Data Science',
+        audienceLabel: 'MBA/BBA (BI & decision-making)',
+        audience: ['Business analysts', 'Managers', 'MBA/BBA'],
+        duration: '2 months',
+        fees: '30,000',
+        tagline: 'Business intelligence, predictive analytics & strategy.',
+        topics: [
+          'KPIs, dashboards & storytelling',
+          'Forecasting & optimization',
+          'Data-driven decision-making',
+          'Case-based capstone',
+        ],
+      },
+
+      // Specialized Industry Courses
+      {
+        id: 'fin',
+        title: 'AI & Quantum in Finance',
+        track: 'Industry Specializations',
+        audienceLabel: 'B.Com, MBA Finance, CFA aspirants',
+        audience: ['Risk modelers', 'FinTech analysts', 'MBA/B.Com'],
+        duration: '2 months',
+        fees: '30,000',
+        tagline: 'Optimization, risk, fraud & portfolio analytics.',
+        topics: [
+          'Portfolio optimization (QAOA/VQE)',
+          'Risk scoring & fraud detection',
+          'Time-series modeling',
+          'Compliance & explainability',
+        ],
+      },
+      {
+        id: 'bio',
+        title: 'AI & Quantum in Healthcare & Biotech',
+        track: 'Industry Specializations',
+        audienceLabel: 'Life-science students & researchers',
+        audience: ['Bio/health researchers', 'Data scientists', 'MedTech ops'],
+        duration: '3 months',
+        fees: '35,000',
+        tagline: 'Drug discovery, imaging & bioinformatics.',
+        topics: [
+          'Molecular simulations (VQE/QML)',
+          'Medical imaging & genomics',
+          'Regulatory & data privacy',
+          'Translational capstone',
+        ],
+      },
+      {
+        id: 'cyber',
+        title: 'AI & Quantum in Cybersecurity',
+        track: 'Industry Specializations',
+        audienceLabel: 'Engineering + MCA students/pros',
+        audience: ['Security analysts', 'Network engineers', 'CS students'],
+        duration: '3 months',
+        fees: '30,000',
+        tagline: 'Threat modeling, PQC migration & SOC analytics.',
+        topics: [
+          'Anomaly detection & threat intel',
+          'PQC standards & migration playbook',
+          'Red/blue team simulations',
+          'Security operations analytics',
+        ],
+      },
+      {
+        id: 'founders',
+        title: 'AI & Quantum for Entrepreneurs',
+        track: 'Industry Specializations',
+        audienceLabel: 'Startup founders & innovators',
+        audience: ['Founders', 'Product leaders', 'Innovation teams'],
+        duration: '1.5 months',
+        fees: '40,000',
+        tagline: 'From idea to MVP: tech, GTM & funding.',
+        topics: [
+          'Problem discovery & validation',
+          'MVP scoping & no-/low-code tools',
+          'Partnerships, GTM & pricing',
+          'Fundraising basics & storytelling',
+        ],
+      },
+    ];
+
+    const TRACKS = ['All', 'Quantum Computing', 'LLM & Data Science', 'AI & Data Science', 'Industry Specializations'];
+
+    // ------- DOM Helpers -------
+    const $ = (sel, el=document) => el.querySelector(sel);
+    const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+
+    // ------- Render Filters -------
+    const filtersEl = document.getElementById('filters');
+    let activeTrack = 'All';
+    TRACKS.forEach(track => {
+      const btn = document.createElement('button');
+      btn.className = 'chip' + (track === activeTrack ? ' active' : '');
+      btn.textContent = track;
+      btn.onclick = () => {
+        activeTrack = track;
+        $$('.chip', filtersEl).forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        renderGrid();
+      }
+      filtersEl.appendChild(btn);
+    });
+
+    // ------- Render Cards -------
+    const grid = document.getElementById('grid');
+    function makeCard(c){
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.setAttribute('tabindex','0');
+      card.innerHTML = `
+        <div class="track">${c.track}</div>
+        <h3>${c.title}</h3>
+        <p>${c.tagline}</p>
+        <div class="badgebar">
+          <span class="badge">⏳ ${c.duration}</span>
+          <span class="badge">₹ ${c.fees}</span>
+          <span class="badge">👥 ${c.audienceLabel}</span>
+        </div>
+      `;
+      card.addEventListener('click', () => openModal(c.id));
+      card.addEventListener('keypress', (e) => { if(e.key==='Enter') openModal(c.id) });
+      return card;
+    }
+
+    function renderGrid(){
+      grid.innerHTML = '';
+      const items = activeTrack==='All' ? COURSES : COURSES.filter(c => c.track===activeTrack);
+      items.forEach(c => grid.appendChild(makeCard(c)));
+    }
+    renderGrid();
+
+    // ------- Modal Logic -------
+    const overlay = document.getElementById('overlay');
+    const modal = document.getElementById('modal');
+    const closeBtn = document.getElementById('close');
+
+    function openModal(id){
+      const c = COURSES.find(x => x.id === id);
+      if(!c) return;
+      document.getElementById('m-title').textContent = c.title;
+      document.getElementById('m-sub').textContent = c.tagline;
+      document.getElementById('m-duration').textContent = `Duration: ${c.duration}`;
+      document.getElementById('m-fees').textContent = `Fees: ${c.fees}`;
+      document.getElementById('m-track').textContent = c.track;
+
+      const topicsUl = document.getElementById('m-topics');
+      topicsUl.innerHTML = '';
+      c.topics.forEach(t => { const li = document.createElement('li'); li.textContent = t; topicsUl.appendChild(li); });
+
+      const audUl = document.getElementById('m-audience');
+      audUl.innerHTML = '';
+      c.audience.forEach(t => { const li = document.createElement('li'); li.textContent = t; audUl.appendChild(li); });
+
+      overlay.classList.add('show');
+      modal.classList.add('show');
+      overlay.setAttribute('aria-hidden','false');
+    }
+
+    function closeModal(){
+      modal.classList.remove('show');
+      overlay.classList.remove('show');
+      overlay.setAttribute('aria-hidden','true');
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); })
+
+    // CTA actions (replace with real links)
+    document.getElementById('enrollBtn').onclick = () => alert('Thanks! Enrollment opening soon. Contact: surajm@aion-ia.in');
+    document.getElementById('brochureBtn').onclick = () => alert('Brochure download will be available shortly.');
+  </script>
+</body>
+</html>

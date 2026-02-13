@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantum Job Board : Aion‑IA</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0b0c10;
+      color: #fff;
+      font-family: sans-serif;
+      overflow-x: hidden;
+    }
+
+    #bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      box-sizing: border-box;
+    }
+
+    header img {
+      max-height: 40px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .back-btn {
+      background: #1f2833;
+      color: #66fcf1;
+      padding: 8px 12px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    h1 {
+      text-align: center;
+      padding-top: 80px;
+      margin: 5px 0;
+    }
+
+    .jobs-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .job-card {
+      background: #1f2833;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(102, 252, 241, 0.2);
+      transition: transform 0.2s;
+    }
+
+    .job-card:hover {
+      transform: scale(1.02);
+    }
+
+    .job-card h3 {
+      margin: 0 0 0.5em;
+      color: #66fcf1;
+    }
+
+    .job-card p {
+      margin: 4px 0;
+      font-size: 0.95em;
+      color: #c5c6c7;
+    }
+
+    .apply-btn {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: #45a29e;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg"></canvas>
+  <header>
+    <img src="images/logo.png" alt="Aion‑IA Logo">
+    <a href="index.html" class="back-btn">Back</a>
+  </header>
+  <h1>Quantum Jobs Board: Aion‑IA</h1>
+  <div class="jobs-container">
+    <!-- Job cards below -->
+    <div class="job-card">
+      <h3>Quant Dev Engineer, Technical Lead</h3>
+      <p>IonQ | College Park, MD</p>
+      <a href="https://ionq.com/careers/5553335004?gh_jid=5553335004" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Quant Software Engineer, API</h3>
+      <p>IonQ | Remote / HQ</p>
+      <a href="https://ionq.com/careers/5553126004?gh_jid=5553126004" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Director, Quantum Applications – Energy</h3>
+      <p>IonQ | Remote / HQ</p>
+      <a href="https://ionq.com/careers/5493637004?gh_jid=5493637004" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Quantum Computing Product Manager</h3>
+      <p>IonQ | Remote / HQ</p>
+      <a href="https://ionq.com/careers/5495600004?gh_jid=5495600004" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Quantum Error Correction Theorist</h3>
+      <p>IBM | Santa Barbara, CA</p>
+      <a href="https://ibmglobal.avature.net/en_US/careers/JobDetail?jobId=34166" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Research Scientist – Quantum Security</h3>
+      <p>IBM | US Remote/Onsite</p>
+      <a href="https://ibmglobal.avature.net/en_US/careers/JobDetail?jobId=35594" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Sr. Manager – Quantum Computing Applied Research</h3>
+      <p>NVIDIA | Santa Clara, CA</p>
+      <a href="https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite/job/Senior-Manager--Quantum-Computing-Applied-Research_JR1996928" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Quantum Engineer</h3>
+      <p>Atom Computing | Boulder, CO</p>
+      <a href="https://jobs.thirdpointventures.com/companies/atom-computing/jobs/52616450-quantum-engineer" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Senior SW Engineer – Quantum Compilers</h3>
+      <p>Atom Computing | Berkeley, CA</p>
+      <a href="https://jobs.preludeventures.com/companies/atom-computing/jobs/50502245-senior-software-engineer-quantum-compilers" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Research Scientist – Error Correction Team</h3>
+      <p>AWS CQC | Pasadena, CA</p>
+      <a href="https://www.amazon.jobs/en/jobs/2972383/quantum-research-scientist-quantum-error-correction-team-aws-center-for-quantum-computing" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Facilities Engineer</h3>
+      <p>AWS Center for Quantum Computing | Pasadena, CA</p>
+      <a href="https://www.amazon.jobs/en/jobs/2964048/facilities-engineer-aws-center-for-quantum-computing" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Sr. Security Engineer</h3>
+      <p>AWS Center for Quantum Computing | Pasadena, CA</p>
+      <a href="https://www.amazon.jobs/en/jobs/2836646/sr-security-engineer-aws-center-for-quantum-computing" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Assembly & Testing Engineer – Cryogenic HW</h3>
+      <p>AWS Center for Quantum Computing | Pasadena, CA</p>
+      <a href="https://www.amazon.jobs/en/jobs/2954485/assembly-integration-testing-engineer-cryogenic-hardware-integration" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Quantum Software Engineer</h3>
+      <p>PsiQuantum | Palo Alto, CA</p>
+      <a href="https://www.psiquantum.com/apply?gh_jid=6279512003" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Quantum Control Engineer</h3>
+      <p>Quantinuum | Germany</p>
+      <a href="https://jobs.eu.lever.co/quantinuum/12b970e5-6926-4537-beb3-c74a7acf1fb6" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Software Engineer – Quantum Control</h3>
+      <p>QuantumJobs.US | Remote</p>
+      <a href="https://www.quantumjobs.us/job/software-engineer-control" class="apply-btn" target="_blank">Apply Now</a>
+    </div>
+    <div class="job-card">
+      <h3>Will Add more in Future</h3>
+      <p>Contact Us</p>
+      <a href="https://www.aion-ia.in" class="apply-btn" target="_blank">Contact Us</a>
+    </div>
+  </div>
+
+<script>
+  const canvas = document.getElementById("bg");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const particles = [];
+  const particleCount = 80;
+  const maxDistance = 150;
+
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 1,
+      vy: (Math.random() - 0.5) * 1,
+      radius: Math.random() * 2 + 1
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw particles
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = "#66fcf1";
+      ctx.shadowColor = "#66fcf1";
+      ctx.shadowBlur = 8;
+      ctx.fill();
+    });
+
+    // Draw entangled connections
+    for (let i = 0; i < particleCount; i++) {
+      for (let j = i + 1; j < particleCount; j++) {
+        const a = particles[i];
+        const b = particles[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < maxDistance) {
+          const alpha = 1 - dist / maxDistance;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(102, 252, 241, ${alpha})`;
+          ctx.lineWidth = 0.7;
+          ctx.shadowColor = "#66fcf1";
+          ctx.shadowBlur = 6;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Update particle positions
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+
+  window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+</script>
+</body>
+</html>

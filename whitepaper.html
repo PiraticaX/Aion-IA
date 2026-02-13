@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aion-IA | Whitepapers</title>
+<style>
+* {margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif;}
+body {background:#0d0d0d;color:#fff;overflow-x:hidden;min-height:100vh;position:relative;}
+canvas#bgCanvas {position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;}
+
+header {position:relative;text-align:center;padding:4rem 2rem 1rem;z-index:2;}
+header img {position:absolute;top:1.5rem;left:1.5rem;width:60px;height:auto;}
+header .header-text {display:flex;flex-direction:column;align-items:center;}
+header h1 {font-size:2.4rem;letter-spacing:1px;color:#FFD700;text-shadow:0 0 12px rgba(255,215,0,0.5);margin-bottom:0.6rem;}
+header p {color:#ccc;font-size:1rem;margin-top:0;}
+
+.container {position:relative;z-index:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:2rem;padding:3rem 3rem 6rem;max-width:1200px;margin:auto;}
+.paper {background:rgba(30,30,30,0.8);border:1px solid rgba(80,80,80,0.5);padding:1.5rem;border-radius:12px;text-align:left;transition:all 0.3s ease;backdrop-filter:blur(10px);}
+.paper:hover {transform:translateY(-6px);box-shadow:0 0 15px rgba(255,215,0,0.3);border-color:rgba(255,215,0,0.4);}
+.paper h3 {font-size:1.2rem;color:#FFD700;margin-bottom:0.5rem;}
+.paper .author {font-size:0.9rem;color:#ccc;margin-bottom:0.4rem;}
+.paper .domain {font-size:0.85rem;color:#999;margin-bottom:0.6rem;}
+.paper ul {margin-left:1rem;margin-bottom:1rem;}
+.paper ul li {font-size:0.85rem;color:#aaa;line-height:1.3rem;}
+.download-btn {display:inline-block;padding:0.6rem 1.2rem;background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.4);color:#FFD700;border-radius:6px;text-decoration:none;transition:all 0.3s ease;}
+.download-btn:hover {background:rgba(255,215,0,0.25);box-shadow:0 0 10px rgba(255,215,0,0.4);}
+
+.modal {position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,10,0.96);display:flex;align-items:center;justify-content:center;z-index:10;backdrop-filter:blur(8px);}
+.modal-content {background:rgba(25,25,25,0.9);padding:2rem;border-radius:12px;text-align:center;width:90%;max-width:400px;border:1px solid rgba(255,215,0,0.3);box-shadow:0 0 25px rgba(255,215,0,0.2);}
+.modal-content h2 {margin-bottom:1rem;color:#FFD700;}
+.modal-content input {width:100%;padding:0.7rem;margin:0.5rem 0;border:none;border-radius:6px;background:rgba(50,50,50,0.8);color:#fff;outline:none;}
+.modal-content button {background:rgba(255,215,0,0.15);color:#FFD700;border:1px solid rgba(255,215,0,0.3);padding:0.6rem 1.2rem;border-radius:8px;margin-top:1rem;cursor:pointer;transition:0.3s ease;}
+.modal-content button:hover {background:rgba(255,215,0,0.3);}
+
+.back-btn {position:fixed;top:1.5rem;right:1.5rem;z-index:5;padding:0.6rem 1.2rem;border-radius:8px;background:rgba(50,50,50,0.7);border:1px solid rgba(255,215,0,0.3);color:#FFD700;text-decoration:none;font-size:0.9rem;transition:0.3s ease;}
+.back-btn:hover {background:rgba(255,215,0,0.2);box-shadow:0 0 10px rgba(255,215,0,0.4);}
+
+footer {text-align:center;padding:2rem;font-size:0.8rem;opacity:0.6;}
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+<a href="index.html" class="back-btn">← Back</a>
+
+<div class="modal" id="entryModal">
+  <div class="modal-content">
+    <h2>Access Aion-IA Whitepapers</h2>
+    <p>Please enter your details to continue</p>
+    <form id="accessForm" action="send_form.php" method="POST">
+      <input type="text" name="name" placeholder="Full Name" required>
+      <input type="text" name="phone" placeholder="Phone Number" required>
+      <input type="email" name="email" placeholder="Professional Email" required>
+      <small id="errorMsg" style="color: #ff6666; display: none;">Please use a professional email address.</small>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+<header>
+  <img src="images/logo.png" alt="Logo">
+  <div class="header-text">
+    <h1>Aion-IA Whitepapers</h1>
+    <p>Cutting-edge explorations in Quantum Computing, AI, and Photonic Technologies</p>
+  </div>
+</header>
+
+<div class="container">
+  <!-- 8 Papers (same as before, truncated for brevity, include all 8) -->
+  <!-- Example Paper -->
+  <div class="paper">
+  <h3>Multi-Channel Entanglement Authentication</h3>
+  <p class="author">Author: B M Darshan Kumar</p>
+  <p class="domain">Domain: Quantum Cryptography</p>
+  <ul>
+    <li>Entanglement Based Key Generation</li>
+    <li>Decomposition of Entanglement Pairs</li>
+    <li>Gradient descent into PQC</li>
+  </ul>
+  <a href="whitepaper/mcea.pdf" class="download-btn" download>Download</a>
+</div>
+
+<div class="paper">
+  <h3>Quantum Encoded Protein Fingerprints</h3>
+  <p class="author">Author: B M Darshan Kumar</p>
+  <p class="domain">Domain: Quantum BioTech</p>
+  <ul>
+    <li>Protein synthesis using quantum simulations</li>
+    <li>Patient proteome fingerprinting</li>
+    <li>Drug–protein matching workflows</li>
+  </ul>
+  <a href="whitepaper/qepf.pdf" class="download-btn" download>Download</a>
+</div>
+
+<div class="paper">
+  <h3>Quantum Decoy Signature Protocol</h3>
+  <p class="author">Author: B M Darshan Kumar, M Suraj</p>
+  <p class="domain">Domain: Quantum Network Security</p>
+  <ul>
+    <li>Decoy-based entanglement signature verification</li>
+    <li>Man-in-the-middle resistant communication</li>
+    <li>Hybrid QKD identity validation</li>
+  </ul>
+  <a href="whitepaper/QDSP.pdf" class="download-btn" download>Download</a>
+</div>
+
+<div class="paper">
+  <h3>Quantum Noise-Resilient Blockchain</h3>
+  <p class="author">Author: B M Darshan Kumar, M Suraj</p>
+  <p class="domain">Domain: Quantum Cryptography</p>
+  <ul>
+    <li>Noise-tolerant consensus protocols</li>
+    <li>Quantum-resistant transaction hashing</li>
+    <li>Entangled ledger verification</li>
+  </ul>
+  <a href="whitepaper/QNRB.pdf" class="download-btn" download>Download</a>
+</div>
+
+<div class="paper">
+  <h3>Quantum Portfolio Optimization with Decoherence Tracking</h3>
+  <p class="author">Author: B M Darshan Kumar, M Suraj</p>
+  <p class="domain">Domain: Quantum Finance</p>
+  <ul>
+    <li>Risk-aware decoherence modeling</li>
+    <li>Annealing-driven allocation strategy</li>
+    <li>Adaptive volatility hedging</li>
+  </ul>
+  <a href="whitepaper/QPODT.pdf" class="download-btn" download>Download</a>
+</div>
+
+<div class="paper">
+  <h3>Quantum Viral Mutation Simulator</h3>
+  <p class="author">Author: B M Darshan Kumar, M Suraj</p>
+  <p class="domain">Domain: Quantum Bioinformatics</p>
+  <ul>
+    <li>Qubit-based viral genome evolution</li>
+    <li>Mutation trajectory prediction</li>
+    <li>Therapeutic counter-strategy discovery</li>
+  </ul>
+  <a href="whitepaper/QVMS.pdf" class="download-btn" download>Download</a>
+</div>
+
+<div class="paper">
+  <h3>Quantum-Entangled Market Sentiment Oracle</h3>
+  <p class="author">Author: B M Darshan Kumar, M Suraj</p>
+  <p class="domain">Domain: Quantum Decision Systems</p>
+  <ul>
+    <li>Sentiment-aware entanglement inference</li>
+    <li>Quantum probabilistic risk signals</li>
+    <li>Market behavior prediction enhancement</li>
+  </ul>
+  <a href="whitepaper/QEMSO.pdf" class="download-btn" download>Download</a>
+</div>
+  <!-- Repeat the other 7 papers here with their details -->
+</div>
+
+<footer>
+  © Aion-IA | All Rights Reserved
+</footer>
+
+<script>
+// ====== FORM VALIDATION ======
+const form = document.getElementById("accessForm");
+const modal = document.getElementById("entryModal");
+const errorMsg = document.getElementById("errorMsg");
+const bannedDomains = ["gmail.com","yahoo.com","outlook.com","hotmail.com","icloud.com"];
+
+if(localStorage.getItem("aionAccess")==="granted"){ modal.style.display="none"; }
+
+form.addEventListener("submit", (e) => {
+  const email = form.email.value.trim().toLowerCase();
+  const domain = email.split("@")[1];
+  if(bannedDomains.some(b => domain.includes(b))){
+    e.preventDefault();
+    errorMsg.textContent = "Please use a professional email address.";
+    errorMsg.style.display = "block";
+    return;
+  }
+  // After submit, hide modal
+  localStorage.setItem("aionAccess","granted");
+  modal.style.display = "none";
+});
+
+// ====== PARTICLE BACKGROUND ======
+const canvas=document.getElementById('bgCanvas');
+const ctx=canvas.getContext('2d');
+let w=canvas.width=window.innerWidth;
+let h=canvas.height=window.innerHeight;
+window.addEventListener('resize',()=>{ w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight; });
+
+class Particle{constructor(){this.x=Math.random()*w;this.y=Math.random()*h;this.vx=(Math.random()-0.5)*0.2;this.vy=(Math.random()-0.5)*0.2;this.radius=Math.random()*1.8+0.5;this.color=Math.random()<0.7?'#FFD700':'#FFFFFF';}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w)this.vx*=-1;if(this.y<0||this.y>h)this.vy*=-1;}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);ctx.fillStyle=this.color;ctx.shadowBlur=5;ctx.shadowColor=this.color;ctx.fill();}}
+let particles=[];for(let i=0;i<120;i++)particles.push(new Particle());
+function animate(){ctx.clearRect(0,0,w,h);particles.forEach(p=>{p.update();p.draw();});for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){let dx=particles[i].x-particles[j].x;let dy=particles[i].y-particles[j].y;let dist=Math.sqrt(dx*dx+dy*dy);if(dist<100){ctx.beginPath();ctx.strokeStyle='rgba(255,215,0,'+(0.15-(dist/700))+')';ctx.lineWidth=0.7;ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.stroke();}}}requestAnimationFrame(animate);}
+animate();
+</script>
+
+</body>
+</html>

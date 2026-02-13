@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aion-IA | Quantum Computing Roadmap</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Inter:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background: #0b0c10;
+      color: #f0f0f0;
+      overflow-x: hidden;
+    }
+
+    canvas#bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      display: block;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      box-sizing: border-box;
+    }
+
+    header img {
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .back-btn {
+      background: #1f2833;
+      color: #66fcf1;
+      padding: 8px 12px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 100px auto 40px;
+      padding: 0 20px;
+    }
+
+    h1, h2, h3 {
+      color: #00ffff;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    a {
+      color: #00ffff;
+      text-decoration: underline;
+    }
+
+    a:hover {
+      color: #66fcf1;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .brand img {
+      width: 100px;
+    }
+
+    .brand h1 {
+      font-size: 2.8rem;
+      margin: 10px 0;
+    }
+
+    .tree {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .branch {
+      border: 2px solid #00ffff;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px;
+      width: 90%;
+      max-width: 900px;
+      background: rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 14px rgba(0, 255, 255, 0.15);
+    }
+
+    .branch-title {
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+
+    .branch h3 {
+      margin-top: 20px;
+      border-bottom: 1px solid #00ffff;
+      padding-bottom: 5px;
+    }
+
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    @media (max-width: 600px) {
+      .branch {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg"></canvas>
+
+  <header>
+  <div style="display: flex; align-items: center;">
+    <img src="images/logo.png" alt="Aion-IA Logo" href="index.html" style="height: 40px; object-fit: contain;" onerror="this.style.display='none'">
+  </div>
+  <a href="index.html" class="back-btn">Back</a>
+</header>
+
+  <div class="container">
+    <div class="brand">
+      <h1>Aion-IA Quantum Research</h1>
+      <p><strong>Quantum Computing Roadmap for Beginners (2025 Edition)</strong></p>
+    </div>
+
+    <div class="tree">
+      <div class="branch">
+        <div class="branch-title">🌱 Level 0: Get the Basics Right</div>
+        <h3>Quantum Mechanics</h3>
+        <ul>
+          <li><a href="https://www.youtube.com/playlist?list=PL6C8B2F9F688A0E3E" target="_blank">MinutePhysics Quantum Playlist</a></li>
+          <li><a href="https://quantum.country/qcvc" target="_blank">Quantum Country – Intuitive Learning</a></li>
+        </ul>
+        <h3>Classical Computing Fundamentals</h3>
+        <ul>
+          <li><a href="https://cs50.harvard.edu/x/" target="_blank">CS50x by Harvard</a></li>
+          <li><a href="https://www.nand2tetris.org/" target="_blank">Nand2Tetris</a></li>
+        </ul>
+      </div>
+
+      <div class="branch">
+        <div class="branch-title">🧠 Level 1: Intro to Quantum Computing</div>
+        <h3>Math & Theory Essentials</h3>
+        <ul>
+          <li><a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr" target="_blank">Essence of Linear Algebra – 3Blue1Brown</a></li>
+          <li><a href="https://www.khanacademy.org/math/algebra2" target="_blank">Khan Academy – Probability & Complex Numbers</a></li>
+        </ul>
+        <h3>Beginner Courses</h3>
+        <ul>
+          <li><a href="https://qiskit.org/textbook/preface.html" target="_blank">Qiskit Textbook</a></li>
+          <li><a href="https://github.com/microsoft/QuantumKatas" target="_blank">Microsoft Quantum Katas</a></li>
+          <li><a href="https://quantum.country/qcvc" target="_blank">Quantum Computing for the Very Curious</a></li>
+        </ul>
+      </div>
+
+      <div class="branch">
+        <div class="branch-title">🧪 Level 2: Get Hands-On</div>
+        <h3>Simulators & Platforms</h3>
+        <ul>
+          <li><a href="https://quantum-computing.ibm.com/login" target="_blank">IBM Quantum Lab</a></li>
+          <li><a href="https://github.com/aws/amazon-braket-examples" target="_blank">Amazon Braket Examples</a></li>
+          <li><a href="https://pennylane.ai/" target="_blank">PennyLane – QML</a></li>
+        </ul>
+        <h3>Projects</h3>
+        <ul>
+          <li>Bell's Theorem with Qiskit</li>
+          <li>Deutsch-Jozsa Algorithm Simulation</li>
+          <li>Build a Quantum Dice Simulator</li>
+        </ul>
+      </div>
+
+      <div class="branch">
+        <div class="branch-title">🔍 Level 3: Choose a Path</div>
+        <h3>Quantum Cryptography</h3>
+        <ul>
+          <li><a href="https://qiskit.org/textbook/ch-algorithms/quantum-key-distribution.html" target="_blank">QKD with Qiskit</a></li>
+          <li><a href="https://qutech.nl/qutech-academy/" target="_blank">QuTech Academy – Quantum Security</a></li>
+        </ul>
+        <h3>Quantum Machine Learning</h3>
+        <ul>
+          <li><a href="https://pennylane.ai/qml/demos.html" target="_blank">PennyLane QML Demos</a></li>
+          <li><a href="https://qiskit.org/ecosystem/machine-learning/" target="_blank">Qiskit Machine Learning</a></li>
+        </ul>
+        <h3>Quantum Chemistry</h3>
+        <ul>
+          <li><a href="https://qiskit.org/ecosystem/nature/" target="_blank">Qiskit Nature – VQE</a></li>
+          <li><a href="https://qiskit.org/textbook-beta/chapters/quantum-chemistry.html" target="_blank">Quantum Chemistry from IBM</a></li>
+        </ul>
+      </div>
+
+      <div class="branch">
+        <div class="branch-title">🌐 Level 4: Join the Community</div>
+        <h3>Global Communities</h3>
+        <ul>
+          <li><a href="https://qosf.org/" target="_blank">QOSF (Quantum Open Source Foundation)</a></li>
+          <li><a href="https://qisk.it/join-slack" target="_blank">Qiskit Slack</a></li>
+          <li><a href="https://discuss.pennylane.ai/" target="_blank">PennyLane Forums</a></li>
+        </ul>
+        <h3>Hackathons & Events</h3>
+        <ul>
+          <li><a href="https://qhack.ai/" target="_blank">QHack – Global Quantum Hackathon</a></li>
+          <li><a href="https://qiskit.org/events/summer-school/" target="_blank">Qiskit Global Summer School</a></li>
+        </ul>
+      </div>
+
+      <div class="branch">
+        <div class="branch-title">🚀 Level 5: Publish & Collaborate</div>
+        <ul>
+          <li><a href="https://medium.com" target="_blank">Publish Blogs on Medium</a></li>
+          <li><a href="https://hashnode.com" target="_blank">Share on Hashnode</a></li>
+          <li><a href="https://github.com/Qiskit" target="_blank">Contribute to Qiskit</a></li>
+          <li><a href="https://github.com/quantumlib/Cirq" target="_blank">Contribute to Cirq</a></li>
+          <li><a href="https://quantum.jobs/" target="_blank">Find Internships – Quantum.jobs</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="width:100%;display:flex;flex-direction:column;gap:8px;min-height:635px;"><iframe src="https://wayground.com/embed/quiz/68867cba9aa9ce8b0a05853e" title=" - Wayground" style="flex:1;" frameBorder="0" allowfullscreen></iframe><a href="https://wayground.com/admin?source=embedFrame" target="_blank">Explore more at Wayground.</a></div>
+    <footer>
+      <p>💡 Want a free downloadable PDF version of this roadmap with checklist? DM "Quantum PDF" to <a href="mailto:ibmdarshankumar@aion-ia.in">ibmdarshankumar@aion-ia.in</a></p>
+      <p>© 2025 Aion-IA Quantum Research Company. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+    const particles = [];
+    const particleCount = 100;
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 2 + 1,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, idx) => {
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = "#00ffffaa";
+        ctx.shadowColor = "#00ffff";
+        ctx.shadowBlur = 10;
+        ctx.fill();
+
+        // draw lines to nearby particles
+        for (let j = idx + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = "rgba(102,252,241,0.1)";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    window.onresize = () => {
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
+    };
+  </script>
+</body>
+</html>
+
+  

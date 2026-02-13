@@ -1490,6 +1490,27 @@ blockquote {
     margin:0;
 }
 
+<style>
+    
+    .competition-btn {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        padding: 15px 30px;
+        font-size: 18px;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 5px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: 0.3s ease-in-out;
+        box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 0.2);
+    }
+
+    .competition-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        box-shadow: inset 0px 0px 15px rgba(255, 255, 255, 0.4);
+    }
+
 
 
 /*------------------------------------------------------------------------------------------*/
