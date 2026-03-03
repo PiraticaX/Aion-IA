@@ -29,20 +29,38 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
-
-    .dropdown {
-  position: relative;
-  display: inline-block;
+        /* Navbar */
+#nav-main {
+  background: #f5f5f5;
+  padding: 10px 20px;
 }
 
+#nav-main ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#nav-main ul li {
+  display: inline-block;
+  position: relative;
+  margin-right: 20px;
+}
+
+/* Dropdown box */
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: white;
+  top: 100%;              /* directly below navbar */
+  left: 0;
+  background: white;
   border: 1px solid #ccc;
-  padding: 10px;
+  padding: 15px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
+/* Show on hover */
 .dropdown:hover .dropdown-content {
   display: block;
 }
@@ -267,25 +285,28 @@ button, a, .custom-cursor {
                     </aside>
 
                     <!--Main Navigation-->
-                   <nav>
-<ul>
-  <li style="display:inline;"><a href="#banner">Home</a></li>
-  <li style="display:inline;"><a href="#services">Services</a></li>
-  <li style="display:inline;"><a href="#partners">Partners</a></li>
-  <li style="display:inline;"><a href="/courses.html">Courses</a></li>
+                            <nav id="nav-main">
+  <ul>
+    <li><a href="#banner">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#partners">Partners</a></li>
+    <li><a href="/courses.html">Courses</a></li>
 
-  <li class="dropdown" style="display:inline;">
-    <a href="#">Engines</a>
-    <ol class="dropdown-content">
-      <li><a href="/optimizer.html">Construction Optimisation Engine</a></li>
-      <li><a href="/power-grid-optimizer.html">Power Grid Optimisation Engine</a></li>
-      <li><a href="/logistics-scheduling.html">Logistics Scheduling Engine</a></li>
-    </ol>
-  </li>
+    <li class="dropdown">
+      <a href="#">Engines</a>
+      <div class="dropdown-content">
+        <ol>
+          <li><a href="/optimizer.html">Construction Optimisation Engine</a></li>
+          <li><a href="/power-grid-optimizer.html">Power Grid Optimisation Engine</a></li>
+          <li><a href="/logistics-scheduling.html">Logistics Scheduling Engine</a></li>
+        </ol>
+      </div>
+    </li>
 
-  <li style="display:inline;"><a href="/whitepaper.html">Whitepapers</a></li>
-</ul>
+    <li><a href="/whitepaper.html">Whitepapers</a></li>
+  </ul>
 </nav>
+
                     <!--End of Main Navigation-->
 
                     <div id="nav-trigger"><span></span></div>
@@ -694,6 +715,7 @@ button, a, .custom-cursor {
 </body>
 
 </html>
+
 
 
 
