@@ -3,214 +3,106 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Construction Decision Intelligence</title>
+<title>Construction Intelligence Engine</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
-    --bg-primary: #0b0f19;
-    --bg-secondary: #111827;
+    --bg: #0b0f19;
+    --panel: #111827;
+    --border: rgba(255,255,255,0.06);
+    --text: #f3f4f6;
+    --muted: #9ca3af;
     --accent: #3b82f6;
-    --text-primary: #f9fafb;
-    --text-secondary: #9ca3af;
-    --glass: rgba(255,255,255,0.04);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin:0; padding:0; box-sizing:border-box; }
 
 body {
     font-family: 'Inter', sans-serif;
-    background: radial-gradient(circle at 20% 20%, #0f172a 0%, #0b0f19 60%);
-    color: var(--text-primary);
-    overflow-x: hidden;
+    background: var(--bg);
+    color: var(--text);
 }
 
-/* NAVBAR */
-.navbar {
-    position: fixed;
-    width: 100%;
-    padding: 22px 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* TOP BAR */
+.topbar {
+    height: 70px;
+    background: rgba(11,15,25,0.85);
     backdrop-filter: blur(12px);
-    background: rgba(11,15,25,0.6);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    z-index: 100;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
 }
 
-.logo {
+.brand {
     font-weight: 600;
-    font-size: 18px;
+    font-size: 16px;
     letter-spacing: 0.5px;
 }
 
-.nav-link {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 14px;
-    transition: 0.3s;
-}
-
-.nav-link:hover {
-    color: var(--accent);
-}
-
-/* HERO */
-.hero {
-    padding-top: 140px;
-    text-align: center;
-    padding-bottom: 80px;
-}
-
-.hero h1 {
-    font-size: 48px;
-    font-weight: 600;
-    letter-spacing: -1px;
-    margin-bottom: 20px;
-}
-
-.hero p {
-    max-width: 780px;
-    margin: auto;
-    color: var(--text-secondary);
-    font-size: 18px;
-    line-height: 1.6;
-}
-
-/* METRICS STRIP */
-.metrics {
-    display: flex;
-    justify-content: center;
-    gap: 60px;
-    padding: 40px 20px;
-    margin-bottom: 60px;
-}
-
-.metric-box {
-    text-align: center;
-}
-
-.metric-box h2 {
-    font-size: 28px;
-    font-weight: 600;
-    color: var(--accent);
-}
-
-.metric-box span {
+.subtle {
+    color: var(--muted);
     font-size: 13px;
-    color: var(--text-secondary);
 }
 
-/* IFRAME SECTION */
-.engine-section {
-    width: 95%;
-    margin: auto;
-    border-radius: 16px;
-    overflow: hidden;
-    background: var(--glass);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 0 60px rgba(59,130,246,0.08);
-    height: 85vh;
+.back {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.back:hover {
+    color: var(--accent);
+}
+
+/* APP CONTAINER */
+.app-wrapper {
+    height: calc(100vh - 70px);
+    width: 100%;
     position: relative;
-    margin-bottom: 80px;
 }
 
-.engine-section iframe {
+iframe {
     width: 100%;
     height: 100%;
     border: none;
 }
 
-/* LOADER */
+/* Loader */
 .loader {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: var(--text-secondary);
-    font-size: 16px;
+    color: var(--muted);
+    font-size: 14px;
     letter-spacing: 1px;
-}
-
-/* FOOTER */
-footer {
-    text-align: center;
-    padding: 40px;
-    border-top: 1px solid rgba(255,255,255,0.05);
-    color: var(--text-secondary);
-    font-size: 13px;
-}
-
-/* RESPONSIVE */
-@media(max-width: 900px) {
-    .hero h1 {
-        font-size: 32px;
-    }
-
-    .metrics {
-        flex-direction: column;
-        gap: 30px;
-    }
-
-    .engine-section {
-        height: 80vh;
-    }
-
-    .navbar {
-        padding: 20px;
-    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="navbar">
-    <div class="logo">Quantum Infrastructure Intelligence</div>
-    <a href="/" class="nav-link">Home</a>
+<div class="topbar">
+    <div>
+        <div class="brand">Quantum Construction Intelligence</div>
+        <div class="subtle">Decision Intelligence Engine</div>
+    </div>
+    <a href="/" class="back">Back</a>
 </div>
 
-<section class="hero">
-    <h1>Construction Decision Intelligence Engine</h1>
-    <p>
-        Advanced combinatorial optimization platform designed to reduce schedule delays,
-        optimize workforce allocation, and minimize capital inefficiencies in large-scale infrastructure projects.
-    </p>
-</section>
-
-<section class="metrics">
-    <div class="metric-box">
-        <h2>15–25%</h2>
-        <span>Potential Schedule Reduction</span>
-    </div>
-    <div class="metric-box">
-        <h2>8–12%</h2>
-        <span>Cost Optimization Range</span>
-    </div>
-    <div class="metric-box">
-        <h2>Cloud Native</h2>
-        <span>Scalable Optimization Engine</span>
-    </div>
-</section>
-
-<section class="engine-section">
-    <div class="loader" id="loader">Initializing Optimization Engine...</div>
+<div class="app-wrapper">
+    <div class="loader" id="loader">Launching Optimization Engine...</div>
     <iframe 
-        src="https://construction-optimizer.onrender.com/"
+        src="https://construction-optimizer.onrender.com/?embedded=true"
         onload="document.getElementById('loader').style.display='none';"
         allowfullscreen>
     </iframe>
-</section>
-
-<footer>
-    © 2026 Quantum Project Optimization Platform | Infrastructure AI for the Next Generation
-</footer>
+</div>
 
 </body>
 </html>
