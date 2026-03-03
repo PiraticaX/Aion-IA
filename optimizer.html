@@ -1,142 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Construction Optimizer</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Construction Decision Intelligence</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-                Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-            background: #0f172a;
-            color: white;
-            overflow-x: hidden;
-        }
+<style>
+:root {
+    --bg-primary: #0b0f19;
+    --bg-secondary: #111827;
+    --accent: #3b82f6;
+    --text-primary: #f9fafb;
+    --text-secondary: #9ca3af;
+    --glass: rgba(255,255,255,0.04);
+}
 
-        .navbar {
-            width: 100%;
-            padding: 20px 40px;
-            background: #111827;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #1f2937;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .navbar h1 {
-            font-size: 20px;
-            font-weight: 600;
-        }
+body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at 20% 20%, #0f172a 0%, #0b0f19 60%);
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
 
-        .navbar a {
-            color: #38bdf8;
-            text-decoration: none;
-            font-size: 14px;
-        }
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    width: 100%;
+    padding: 22px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(12px);
+    background: rgba(11,15,25,0.6);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    z-index: 100;
+}
 
-        .hero {
-            text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-        }
+.logo {
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+}
 
-        .hero h2 {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
 
-        .hero p {
-            color: #94a3b8;
-            max-width: 800px;
-            margin: auto;
-        }
+.nav-link:hover {
+    color: var(--accent);
+}
 
-        .iframe-container {
-            position: relative;
-            width: 100%;
-            height: 90vh;
-            background: #111827;
-        }
+/* HERO */
+.hero {
+    padding-top: 140px;
+    text-align: center;
+    padding-bottom: 80px;
+}
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+.hero h1 {
+    font-size: 48px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+}
 
-        .loader {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 18px;
-            color: #38bdf8;
-        }
+.hero p {
+    max-width: 780px;
+    margin: auto;
+    color: var(--text-secondary);
+    font-size: 18px;
+    line-height: 1.6;
+}
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #111827;
-            color: #64748b;
-            font-size: 13px;
-            border-top: 1px solid #1f2937;
-        }
+/* METRICS STRIP */
+.metrics {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    padding: 40px 20px;
+    margin-bottom: 60px;
+}
 
-        @media (max-width: 768px) {
-            .hero h2 {
-                font-size: 22px;
-            }
+.metric-box {
+    text-align: center;
+}
 
-            .iframe-container {
-                height: 85vh;
-            }
-        }
-    </style>
+.metric-box h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.metric-box span {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+/* IFRAME SECTION */
+.engine-section {
+    width: 95%;
+    margin: auto;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 60px rgba(59,130,246,0.08);
+    height: 85vh;
+    position: relative;
+    margin-bottom: 80px;
+}
+
+.engine-section iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* LOADER */
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text-secondary);
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+/* RESPONSIVE */
+@media(max-width: 900px) {
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .metrics {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .engine-section {
+        height: 80vh;
+    }
+
+    .navbar {
+        padding: 20px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <div class="navbar">
-        <h1>Quantum Construction Intelligence</h1>
-        <a href="/">Back to Home</a>
+<div class="navbar">
+    <div class="logo">Quantum Infrastructure Intelligence</div>
+    <a href="/" class="nav-link">Home</a>
+</div>
+
+<section class="hero">
+    <h1>Construction Decision Intelligence Engine</h1>
+    <p>
+        Advanced combinatorial optimization platform designed to reduce schedule delays,
+        optimize workforce allocation, and minimize capital inefficiencies in large-scale infrastructure projects.
+    </p>
+</section>
+
+<section class="metrics">
+    <div class="metric-box">
+        <h2>15–25%</h2>
+        <span>Potential Schedule Reduction</span>
     </div>
-
-    <div class="hero">
-        <h2>AI-Powered Construction Schedule Optimization</h2>
-        <p>
-            Advanced resource-constrained scheduling engine designed to reduce
-            project duration, optimize workforce allocation, and minimize cost overruns.
-            Built using combinatorial optimization and cloud-native architecture.
-        </p>
+    <div class="metric-box">
+        <h2>8–12%</h2>
+        <span>Cost Optimization Range</span>
     </div>
-
-    <div class="iframe-container">
-        <div class="loader" id="loader">Loading Optimization Engine...</div>
-
-        <iframe 
-            src="https://construction-optimizer.onrender.com/"
-            id="optimizerFrame"
-            onload="hideLoader()"
-            allowfullscreen>
-        </iframe>
+    <div class="metric-box">
+        <h2>Cloud Native</h2>
+        <span>Scalable Optimization Engine</span>
     </div>
+</section>
 
-    <footer>
-        © 2026 Quantum Project Optimization Platform | Built for Infrastructure Intelligence
-    </footer>
+<section class="engine-section">
+    <div class="loader" id="loader">Initializing Optimization Engine...</div>
+    <iframe 
+        src="https://construction-optimizer.onrender.com/"
+        onload="document.getElementById('loader').style.display='none';"
+        allowfullscreen>
+    </iframe>
+</section>
 
-    <script>
-        function hideLoader() {
-            document.getElementById("loader").style.display = "none";
-        }
-    </script>
+<footer>
+    © 2026 Quantum Project Optimization Platform | Infrastructure AI for the Next Generation
+</footer>
 
 </body>
 </html>
