@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quantum Grid Intelligence Engine</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #0b0f19;
+    --panel: #111827;
+    --border: rgba(255,255,255,0.06);
+    --text: #f3f4f6;
+    --muted: #9ca3af;
+    --accent: #22d3ee;
+    --accent-glow: rgba(34,211,238,0.4);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+}
+
+/* TOP BAR */
+.topbar {
+    height: 72px;
+    background: rgba(11,15,25,0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+}
+
+.brand {
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: 0.6px;
+}
+
+.subtle {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.status {
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 1px;
+}
+
+.back {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 13px;
+    transition: 0.25s ease;
+}
+
+.back:hover {
+    color: var(--accent);
+}
+
+/* APP CONTAINER */
+.app-wrapper {
+    height: calc(100vh - 72px);
+    width: 100%;
+    position: relative;
+}
+
+/* IFRAME */
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: var(--bg);
+}
+
+/* Loader */
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+    text-transform: uppercase;
+}
+
+/* Animated Pulse Dot */
+.loader::after {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-left: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
+    animation: pulse 1.2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.8); opacity: 0.6; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.6; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+    <div>
+        <div class="brand">Quantum Grid Intelligence</div>
+        <div class="subtle">Security-Constrained Unit Commitment Engine</div>
+    </div>
+    <div class="status">Operational</div>
+    <a href="/" class="back">Back</a>
+</div>
+
+<div class="app-wrapper">
+    <div class="loader" id="loader">Launching Grid Optimization Engine</div>
+
+    <iframe 
+        src="https://power-grid-optimizer.onrender.com/?embedded=true"
+        onload="document.getElementById('loader').style.display='none';"
+        allowfullscreen>
+    </iframe>
+</div>
+
+</body>
+</html>
