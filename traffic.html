@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Traffic Optimisation - AION-IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Manrope:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+</head>
+<body class="iframe-page">
+<div id="site-header"></div>
+
+<main>
+  <div style="height:5.4rem" aria-hidden="true"></div>
+  <div id="frameFallback" class="iframe-fallback">
+    <h3>Traffic Optimisation</h3>
+    <p style="margin:1rem auto 0">This application could not be embedded here. Open it directly:</p>
+    <div style="margin-top:1.5rem"><a class="btn btn-solid" href="https://q-traffic-bangalore.onrender.com/" target="_blank" rel="noopener">Open Traffic Optimisation &rarr;</a></div>
+  </div>
+  <iframe id="engineFrame" class="iframe-stage" src="https://q-traffic-bangalore.onrender.com/" title="Traffic Optimisation" loading="lazy" allow="clipboard-write" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</main>
+
+<div id="site-footer"></div>
+<script src="js/main.js"></script>
+<script>
+(function(){
+  var frame = document.getElementById("engineFrame");
+  var fallback = document.getElementById("frameFallback");
+  var timer = setTimeout(function(){}, 0);
+  frame.addEventListener("error", function(){
+    fallback.classList.add("show");
+  });
+})();
+</script>
+</body>
+</html>

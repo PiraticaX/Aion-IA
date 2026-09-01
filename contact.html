@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Contact - AION-IA</title>
+
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Manrope:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/base.css"
+  >
+
+</head>
+
+
+<body>
+
+
+<div id="site-header"></div>
+
+
+<main>
+
+
+  <section
+    class="hero"
+    style="min-height:55svh"
+  >
+
+    <div
+      class="domain-canvas"
+      data-mode="waves"
+      aria-hidden="true"
+      style="opacity:.3"
+    ></div>
+
+
+    <div class="wrap hero-content">
+
+      <div class="hero-eyebrow">
+        COMPANY &nbsp;/&nbsp; CONTACT
+      </div>
+
+
+      <h1>
+        Let's build what comes next.
+      </h1>
+
+
+      <p class="hero-sub">
+        For research collaboration, product enquiries or general questions,
+        reach AION-IA directly.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <section class="section">
+
+    <div class="wrap">
+
+
+      <form
+        id="contactForm"
+        novalidate
+      >
+
+
+        <div class="form-grid">
+
+
+          <!-- Name -->
+
+          <div class="field">
+
+            <label for="ctName">
+              Name
+            </label>
+
+            <input
+              id="ctName"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+            >
+
+          </div>
+
+
+          <!-- Email -->
+
+          <div class="field">
+
+            <label for="ctEmail">
+              Email
+            </label>
+
+            <input
+              id="ctEmail"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            >
+
+          </div>
+
+
+          <!-- Phone -->
+
+          <div class="field">
+
+            <label for="ctPhone">
+              Phone
+            </label>
+
+            <input
+              id="ctPhone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+            >
+
+          </div>
+
+
+          <!-- Organisation -->
+
+          <div class="field">
+
+            <label for="ctOrg">
+              Organisation
+            </label>
+
+            <input
+              id="ctOrg"
+              name="organisation"
+              type="text"
+              autocomplete="organization"
+            >
+
+          </div>
+
+
+          <!-- Subject -->
+
+          <div class="field full">
+
+            <label for="ctSubject">
+              Subject
+            </label>
+
+            <input
+              id="ctSubject"
+              name="subject"
+              type="text"
+              required
+            >
+
+          </div>
+
+
+          <!-- Message -->
+
+          <div class="field full">
+
+            <label for="ctMessage">
+              Message
+            </label>
+
+            <textarea
+              id="ctMessage"
+              name="message"
+              required
+            ></textarea>
+
+          </div>
+
+
+          <!-- Honeypot -->
+
+          <div
+            aria-hidden="true"
+            style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"
+          >
+
+            <label for="ctWebsite">
+              Website
+            </label>
+
+            <input
+              id="ctWebsite"
+              name="website"
+              type="text"
+              tabindex="-1"
+              autocomplete="off"
+            >
+
+          </div>
+
+
+        </div>
+
+
+        <div style="margin-top:var(--space-3)">
+
+          <button
+            class="btn btn-solid"
+            type="submit"
+          >
+            Send message
+          </button>
+
+
+          <div
+            class="form-status"
+            role="status"
+            aria-live="polite"
+          ></div>
+
+        </div>
+
+
+        <p class="form-note">
+          Messages are submitted securely to info@aion-ia.in.
+        </p>
+
+
+      </form>
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+<div id="site-footer"></div>
+
+
+<script src="js/main.js"></script>
+<script src="js/forms.js"></script>
+
+
+</body>
+</html>

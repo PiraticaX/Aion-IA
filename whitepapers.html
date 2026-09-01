@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Whitepapers - AION-IA</title>
+
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Manrope:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <link
+    rel="stylesheet"
+    href="css/base.css"
+  >
+
+</head>
+
+
+<body>
+
+
+<div id="site-header"></div>
+
+
+<!-- =========================================================
+     WHITEPAPER ACCESS GATE
+     ========================================================= -->
+
+<div
+  class="modal-overlay"
+  id="wpGate"
+>
+
+
+  <div class="modal">
+
+
+    <h3>
+      Research Library Access
+    </h3>
+
+
+    <p>
+      Enter your details to access AION-IA's whitepapers.
+    </p>
+
+
+    <form
+      id="wpGateForm"
+      novalidate
+    >
+
+
+      <!-- Name -->
+
+      <div class="field">
+
+        <label for="wpName">
+          Name
+        </label>
+
+        <input
+          id="wpName"
+          name="name"
+          type="text"
+          autocomplete="name"
+          required
+        >
+
+      </div>
+
+
+      <!-- Phone -->
+
+      <div class="field">
+
+        <label for="wpPhone">
+          Phone
+        </label>
+
+        <input
+          id="wpPhone"
+          name="phone"
+          type="tel"
+          autocomplete="tel"
+          required
+        >
+
+      </div>
+
+
+      <!-- Email -->
+
+      <div class="field">
+
+        <label for="wpEmail">
+          Email
+        </label>
+
+        <input
+          id="wpEmail"
+          name="email"
+          type="email"
+          autocomplete="email"
+          required
+        >
+
+      </div>
+
+
+      <!-- Identify the request -->
+
+      <input
+        type="hidden"
+        name="whitepaper"
+        value="AION-IA Research Library"
+      >
+
+
+      <!-- Honeypot -->
+
+      <div
+        aria-hidden="true"
+        style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"
+      >
+
+        <label for="wpWebsite">
+          Website
+        </label>
+
+        <input
+          id="wpWebsite"
+          name="website"
+          type="text"
+          tabindex="-1"
+          autocomplete="off"
+        >
+
+      </div>
+
+
+      <button
+        class="btn btn-solid"
+        type="submit"
+        style="width:100%;justify-content:center"
+      >
+        Access Library
+      </button>
+
+
+      <div
+        class="form-status"
+        role="status"
+        aria-live="polite"
+      ></div>
+
+
+    </form>
+
+
+  </div>
+
+</div>
+
+
+
+<main>
+
+
+  <!-- =======================================================
+       HERO
+       ======================================================= -->
+
+  <section
+    class="hero"
+    style="min-height:55svh"
+  >
+
+
+    <div
+      class="domain-canvas"
+      data-mode="waves"
+      aria-hidden="true"
+      style="opacity:.3"
+    ></div>
+
+
+    <div class="wrap hero-content">
+
+
+      <div class="hero-eyebrow">
+        COMPANY &nbsp;/&nbsp; WHITEPAPERS
+      </div>
+
+
+      <h1>
+        The AION-IA Research Library.
+      </h1>
+
+
+      <p class="hero-sub">
+        Documented research from across AION-IA's four domains
+        and the Physics Guardrail.
+      </p>
+
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =======================================================
+       WHITEPAPER LIBRARY
+       ======================================================= -->
+
+  <section
+    class="section"
+    id="wpLibrary"
+    hidden
+  >
+
+    <div class="wrap">
+
+      <div
+        id="wpListHost"
+        class="editorial-list"
+      ></div>
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+
+<div id="site-footer"></div>
+
+
+
+<script src="data/data.js"></script>
+
+<script src="js/main.js"></script>
+
+
+<script>
+(function(){
+
+  var host =
+    document.getElementById("wpListHost");
+
+  if (!host || typeof AION_WHITEPAPERS === "undefined") {
+    return;
+  }
+
+
+  AION_WHITEPAPERS.forEach(function(p){
+
+    var el =
+      document.createElement("div");
+
+
+    el.className =
+      "editorial-row reveal";
+
+
+    el.innerHTML =
+      '<span class="num">' +
+        p.num +
+      '</span>' +
+
+      '<div>' +
+
+        '<h3>' +
+          p.title +
+        '</h3>' +
+
+        '<p style="margin-top:.6rem">' +
+          p.description +
+        '</p>' +
+
+        '<div class="meta">' +
+          p.authors +
+          ' &middot; ' +
+          p.date +
+        '</div>' +
+
+      '</div>' +
+
+      '<div>' +
+
+        '<a class="text-link" href="' +
+          p.file +
+          '" target="_blank" rel="noopener">' +
+
+          'Read Paper &rarr;' +
+
+        '</a>' +
+
+      '</div>';
+
+
+    host.appendChild(el);
+
+  });
+
+})();
+</script>
+
+
+<script src="js/forms.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Academic Collaboration - AION-IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Manrope:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<main>
+  <section class="hero" style="min-height:55svh">
+    <div class="domain-canvas" data-mode="lattice" aria-hidden="true" style="opacity:.35"></div>
+    <div class="wrap hero-content">
+      <div class="hero-eyebrow">COMPANY &nbsp;/&nbsp; ACADEMIC COLLABORATION</div>
+      <h1>Academic Collaboration &amp; Joint Research.</h1>
+      <p class="hero-sub">AION-IA works alongside academic institutions on joint research across its four domains.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div id="academicList" class="card-grid"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap reveal">
+      <h3>Propose a collaboration</h3>
+      <p style="margin-top:1rem">Institutions interested in joint research with AION-IA are welcome to get in touch directly.</p>
+      <div style="margin-top:1.5rem"><a class="btn btn-solid" href="contact.html">Contact us &rarr;</a></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="data/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+(function(){
+
+  var host = document.getElementById("academicList");
+
+  if (!host || typeof AION_ACADEMIC === "undefined") {
+    return;
+  }
+
+  AION_ACADEMIC.forEach(function(p){
+
+    var el = document.createElement("div");
+
+    el.className = "slot-card reveal";
+
+    el.innerHTML =
+      '<div class="academic-logo-wrap">' +
+        '<img class="academic-logo" src="' +
+          p.logo +
+          '" alt="' +
+          p.name +
+          ' logo">' +
+      '</div>' +
+
+      '<h3>' +
+        p.name +
+      '</h3>' +
+
+      '<p style="margin-top:.8rem">' +
+        p.description +
+      '</p>' +
+
+      (
+        p.link
+          ? '<div style="margin-top:1rem">' +
+              '<a class="text-link" href="' +
+                p.link +
+              '">' +
+                'Learn more &rarr;' +
+              '</a>' +
+            '</div>'
+          : ''
+      );
+
+    host.appendChild(el);
+
+  });
+
+})();
+</script>
+</body>
+</html>

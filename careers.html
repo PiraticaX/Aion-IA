@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Careers - AION-IA</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Manrope:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="css/base.css">
+</head>
+
+<body>
+
+<div id="site-header"></div>
+
+<main>
+
+  <section class="hero" style="min-height:60svh">
+
+    <div
+      class="domain-canvas"
+      data-mode="mesh"
+      aria-hidden="true"
+      style="opacity:.3"
+    ></div>
+
+    <div class="wrap hero-content">
+
+      <div class="hero-eyebrow">
+        COMPANY &nbsp;/&nbsp; CAREERS
+      </div>
+
+      <h1>
+        Work with AION&#8209;IA.
+      </h1>
+
+      <p class="hero-sub">
+        We're looking for researchers, engineers and builders interested in
+        quantum technology, physics-grounded research and the systems built
+        from it.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <section class="section">
+
+    <div class="wrap">
+
+      <form
+        id="careersForm"
+        enctype="multipart/form-data"
+        novalidate
+      >
+
+        <div class="form-grid">
+
+
+          <!-- Name -->
+
+          <div class="field">
+
+            <label for="cName">
+              Name
+            </label>
+
+            <input
+              id="cName"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+            >
+
+          </div>
+
+
+          <!-- Email -->
+
+          <div class="field">
+
+            <label for="cEmail">
+              Email
+            </label>
+
+            <input
+              id="cEmail"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            >
+
+          </div>
+
+
+          <!-- Phone -->
+
+          <div class="field">
+
+            <label for="cPhone">
+              Phone
+            </label>
+
+            <input
+              id="cPhone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+            >
+
+          </div>
+
+
+          <!-- Resume -->
+
+          <div class="field">
+
+            <label for="cResume">
+              Resume
+            </label>
+
+            <input
+              id="cResume"
+              name="resume"
+              type="file"
+              accept=".pdf,.doc,.docx"
+              required
+            >
+
+            <small>
+              PDF, DOC or DOCX. Maximum file size: 10 MB.
+            </small>
+
+          </div>
+
+
+          <!-- GitHub / LinkedIn -->
+
+          <div class="field full">
+
+            <label for="cProfile">
+              GitHub or LinkedIn URL
+            </label>
+
+            <input
+              id="cProfile"
+              name="profile_url"
+              type="url"
+              placeholder="https://github.com/... or https://linkedin.com/in/..."
+              required
+            >
+
+          </div>
+
+
+          <!-- Project -->
+
+          <div class="field full">
+
+            <label for="cProject">
+              One interesting project you've worked on
+            </label>
+
+            <textarea
+              id="cProject"
+              name="project"
+              required
+            ></textarea>
+
+          </div>
+
+
+          <!-- Why AION-IA -->
+
+          <div class="field full">
+
+            <label for="cWhy">
+              Why AION-IA
+            </label>
+
+            <textarea
+              id="cWhy"
+              name="why_aion"
+              required
+            ></textarea>
+
+          </div>
+
+
+          <!-- Honeypot -->
+
+          <div
+            aria-hidden="true"
+            style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"
+          >
+
+            <label for="cWebsite">
+              Website
+            </label>
+
+            <input
+              id="cWebsite"
+              name="website"
+              type="text"
+              tabindex="-1"
+              autocomplete="off"
+            >
+
+          </div>
+
+
+        </div>
+
+
+        <div style="margin-top:var(--space-3)">
+
+          <button
+            class="btn btn-solid"
+            type="submit"
+          >
+            Submit application
+          </button>
+
+          <div
+            class="form-status"
+            role="status"
+            aria-live="polite"
+          ></div>
+
+        </div>
+
+
+        <p class="form-note">
+          Applications are submitted securely to careers@aion-ia.in.
+        </p>
+
+      </form>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<div id="site-footer"></div>
+
+
+<script src="js/main.js"></script>
+<script src="js/forms.js"></script>
+
+</body>
+</html>
